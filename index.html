@@ -1,0 +1,1619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Tenughat Vidyut Nigam Limited — power generation, public information, tenders and sustainability in Jharkhand."
+    />
+    <title>TVNL · Energy for Jharkhand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #183e35;
+        --deep: #123c32;
+        --paper: #f5f4ed;
+        --lime: #d7ec86;
+        --line: #d6dbd0;
+        --muted: #5d6f65;
+        --progress: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 150px;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'DM Sans', 'Noto Sans Devanagari', sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button,
+      a,
+      input,
+      select {
+        outline-offset: 5px;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #c59637;
+      }
+      button {
+        color: inherit;
+      }
+      img {
+        max-width: 100%;
+      }
+      .skip {
+        position: fixed;
+        top: -60px;
+        z-index: 100;
+        background: var(--lime);
+        padding: 12px;
+      }
+      .skip:focus {
+        top: 0;
+      }
+      .utility {
+        background: var(--deep);
+        color: #e4eadf;
+        display: flex;
+        justify-content: space-between;
+        padding: 9px 4.5%;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+      }
+      .utility-links {
+        display: flex;
+        gap: 24px;
+      }
+      .utility a:hover {
+        text-decoration: underline;
+      }
+      .masthead {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(245, 244, 237, 0.98);
+        border-bottom: 1px solid var(--line);
+      }
+      .identity {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 4.5% 15px;
+        gap: 20px;
+      }
+      .brand {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .brand img {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+      }
+      .brand-name {
+        font-family: Manrope, 'Noto Sans Devanagari', sans-serif;
+        font-weight: 800;
+        font-size: 17px;
+        letter-spacing: -0.6px;
+      }
+      .brand small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        margin-top: 5px;
+      }
+      .header-tools {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      .lang {
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        background: transparent;
+        padding: 9px 15px;
+        font-size: 12px;
+      }
+      .seal {
+        width: 49px;
+        height: 49px;
+        object-fit: contain;
+      }
+      .search-button {
+        border: 0;
+        background: none;
+        font-size: 23px;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4.5%;
+        gap: 12px;
+      }
+      .nav a {
+        font-size: 12px;
+        padding: 15px 0;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+      }
+      .nav a[aria-current='page'] {
+        border-color: var(--deep);
+        font-weight: 700;
+      }
+      .nav a:hover {
+        border-color: var(--ink);
+      }
+      .menu-button {
+        display: none;
+      }
+      .hero {
+        min-height: 690px;
+        height: calc(100svh - 153px);
+        max-height: 1000px;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        color: white;
+        background: #283f39;
+      }
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(9, 36, 31, 0.8), rgba(9, 36, 31, 0.25)),
+          linear-gradient(0deg, rgba(9, 36, 31, 0.76), transparent 65%),
+          url('https://tvnl.in/img/slider/1.jpg') center/cover;
+        z-index: -2;
+        transform: scale(1.025);
+      }
+      .hero:after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          110deg,
+          rgba(31, 61, 49, 0.35),
+          transparent
+        );
+        z-index: -1;
+      }
+      .hero-content {
+        padding: 9vh 7% 0;
+        max-width: 980px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .eyebrow:before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .hero .eyebrow {
+        color: var(--lime);
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: Manrope, 'Noto Sans Devanagari', sans-serif;
+      }
+      h1 {
+        font-size: clamp(48px, 6.3vw, 94px);
+        line-height: 1.05;
+        letter-spacing: -0.055em;
+        font-weight: 500;
+        margin: 25px 0;
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--lime);
+      }
+      .hero-copy {
+        font-size: 15px;
+        line-height: 1.75;
+        max-width: 410px;
+        color: #e0e8df;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        border-radius: 50px;
+        border: 1px solid currentColor;
+        padding: 15px 23px;
+        font-size: 12px;
+        font-weight: 600;
+        background: transparent;
+      }
+      .pill.light {
+        background: var(--lime);
+        color: var(--deep);
+        border-color: var(--lime);
+      }
+      .hero .pill {
+        margin-top: 28px;
+      }
+      .hero-bottom {
+        position: absolute;
+        bottom: 32px;
+        left: 7%;
+        right: 7%;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        border-top: 1px solid #ffffff40;
+        padding-top: 22px;
+        gap: 20px;
+      }
+      .hero-stat {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .hero-stat strong {
+        font-family: Manrope, sans-serif;
+        font-size: 56px;
+        letter-spacing: -3px;
+        font-weight: 500;
+      }
+      .hero-stat strong span {
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+      .hero-stat small {
+        font-size: 11px;
+        line-height: 1.6;
+        max-width: 135px;
+      }
+      .scroll-link {
+        font-size: 11px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .scroll-link span {
+        border: 1px solid #ffffff70;
+        border-radius: 50%;
+        padding: 14px;
+      }
+      .hero-coordinate {
+        position: absolute;
+        right: 4%;
+        top: 32%;
+        writing-mode: vertical-rl;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: #dce5d6;
+      }
+      .notice-strip {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        padding: 20px 7%;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+      }
+      .notice-strip strong {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+      }
+      .notice-strip a {
+        flex: 1;
+      }
+      .notice-strip .arrow {
+        font-size: 20px;
+      }
+      .section {
+        padding: 100px 7%;
+      }
+      .section-heading {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        align-items: start;
+        margin-bottom: 48px;
+      }
+      .section-heading h2 {
+        font-size: clamp(32px, 4vw, 56px);
+        line-height: 1.12;
+        letter-spacing: -0.045em;
+        font-weight: 500;
+        max-width: 690px;
+      }
+      .section-heading p {
+        max-width: 315px;
+        font-size: 14px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .section .eyebrow {
+        margin-bottom: 30px;
+        color: var(--muted);
+      }
+      .story {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7%;
+        position: relative;
+      }
+      .story-visual {
+        position: sticky;
+        top: 175px;
+        height: 540px;
+        align-self: start;
+        background: var(--deep);
+        color: var(--lime);
+        overflow: hidden;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .orbit {
+        position: absolute;
+        width: 430px;
+        height: 430px;
+        border: 1px solid #b9cf7545;
+        border-radius: 50%;
+        transform: rotate(-30deg);
+      }
+      .orbit:before,
+      .orbit:after {
+        content: '';
+        position: absolute;
+        border: 1px solid #b9cf7530;
+        border-radius: 50%;
+        inset: 45px;
+      }
+      .orbit:after {
+        inset: 95px;
+      }
+      .energy-line {
+        position: absolute;
+        width: 140%;
+        height: 1px;
+        background: #d7ec8630;
+        transform: rotate(-35deg);
+      }
+      .story-figure {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+      .story-figure strong {
+        font-family: Manrope, sans-serif;
+        font-size: 108px;
+        letter-spacing: -7px;
+        font-weight: 500;
+        display: block;
+      }
+      .story-figure span {
+        font-size: 13px;
+      }
+      .visual-caption {
+        position: absolute;
+        bottom: 32px;
+        left: 30px;
+        right: 30px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+      }
+      .story-step {
+        min-height: 480px;
+        padding: 65px 0 80px;
+        border-top: 1px solid var(--line);
+      }
+      .step-number {
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 30px;
+        display: block;
+      }
+      .story-step h3 {
+        font-size: 34px;
+        letter-spacing: -1.2px;
+        line-height: 1.2;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+      .story-step p {
+        font-size: 15px;
+        line-height: 1.85;
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+      .text-link {
+        font-size: 12px;
+        border-bottom: 1px solid;
+        padding-bottom: 7px;
+        display: inline-flex;
+        gap: 25px;
+      }
+      .chapter-nav {
+        display: flex;
+        gap: 6px;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        right: 30px;
+      }
+      .chapter-nav a {
+        height: 3px;
+        background: #ffffff35;
+        flex: 1;
+      }
+      .chapter-nav a.active {
+        background: var(--lime);
+      }
+      .green-section {
+        background: var(--deep);
+        color: var(--paper);
+      }
+      .green-section .eyebrow,
+      .green-section .section-heading p {
+        color: #c5d2c3;
+      }
+      .access-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-top: 1px solid #ffffff35;
+        border-bottom: 1px solid #ffffff35;
+      }
+      .access-card {
+        padding: 30px;
+        border-right: 1px solid #ffffff35;
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+      .access-card:first-child {
+        padding-left: 0;
+      }
+      .access-card:last-child {
+        border-right: 0;
+      }
+      .access-card .icon {
+        font-size: 28px;
+        color: var(--lime);
+        margin-bottom: 30px;
+      }
+      .access-card h3 {
+        font-size: 23px;
+        font-weight: 500;
+        letter-spacing: -0.5px;
+        margin-bottom: 14px;
+      }
+      .access-card p {
+        font-size: 13px;
+        line-height: 1.7;
+        color: #c5d2c3;
+        max-width: 260px;
+      }
+      .access-card .text-link {
+        margin-top: 25px;
+      }
+      .updates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 65px;
+      }
+      .update-item {
+        display: block;
+        padding: 24px 0;
+        border-top: 1px solid var(--line);
+      }
+      .update-item small {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+      .update-item h3 {
+        font-size: 20px;
+        line-height: 1.45;
+        font-weight: 500;
+        margin: 12px 0;
+      }
+      .photo-card {
+        height: 420px;
+        background: var(--deep);
+        position: relative;
+        overflow: hidden;
+      }
+      .photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .photo-card div {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 70px 30px 30px;
+        color: white;
+        background: linear-gradient(transparent, #123c32e8);
+      }
+      .photo-card h3 {
+        font-size: 28px;
+        font-weight: 500;
+      }
+      .view-banner {
+        background: var(--deep);
+        color: var(--paper);
+        padding: 65px 7%;
+      }
+      .view-banner h1 {
+        font-size: 54px;
+        margin: 18px 0;
+      }
+      .view-banner p {
+        max-width: 650px;
+        line-height: 1.8;
+        color: #c5d2c3;
+      }
+      .subnav {
+        padding: 22px 7%;
+        display: flex;
+        gap: 12px 24px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--line);
+      }
+      .subnav a {
+        font-size: 12px;
+        border-bottom: 1px solid transparent;
+      }
+      .subnav a:hover {
+        border-color: var(--ink);
+      }
+      .content-sections {
+        padding: 15px 7% 80px;
+      }
+      .content-block {
+        padding: 45px 0;
+        border-bottom: 1px solid var(--line);
+        scroll-margin-top: 170px;
+      }
+      .content-block h2 {
+        font-size: 30px;
+        letter-spacing: -0.8px;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+      .content-block p {
+        font-size: 15px;
+        line-height: 1.85;
+        max-width: 850px;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+      .document-row {
+        padding: 20px;
+        border: 1px solid var(--line);
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+        margin: 12px 0;
+        background: #fff7;
+      }
+      .document-row strong {
+        font-weight: 500;
+      }
+      .document-row small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 7px;
+      }
+      .filterbar {
+        display: flex;
+        gap: 16px;
+        margin: 25px 0;
+        flex-wrap: wrap;
+      }
+      .filterbar input,
+      .filterbar select,
+      .portal input,
+      .portal select {
+        padding: 13px 16px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        border-radius: 4px;
+      }
+      .filterbar input {
+        flex: 1;
+        min-width: 180px;
+      }
+      .portal {
+        max-width: 640px;
+        padding: 30px;
+        background: #e9ede2;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+      }
+      .demo-label {
+        display: inline-block;
+        background: var(--lime);
+        padding: 6px 12px;
+        font-size: 11px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      .portal label {
+        display: block;
+        font-size: 12px;
+        margin: 12px 0;
+      }
+      .portal input,
+      .portal select {
+        display: block;
+        width: 100%;
+        margin: 8px 0 20px;
+      }
+      .portal button {
+        background: var(--deep);
+        color: #fff;
+        border: 0;
+        padding: 14px 20px;
+        border-radius: 30px;
+      }
+      .portal-output {
+        margin-top: 20px;
+        line-height: 1.7;
+      }
+      .portal-output:empty {
+        display: none;
+      }
+      .portal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .portal-grid article {
+        padding: 20px;
+        background: #fff;
+      }
+      .portal-grid strong {
+        display: block;
+        font-size: 25px;
+        margin: 8px 0;
+      }
+      footer {
+        background: #0c2c25;
+        color: #c5d2c3;
+        padding: 55px 7% 25px;
+      }
+      .footer-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        padding-bottom: 40px;
+      }
+      .footer-top h2 {
+        color: var(--paper);
+        font-size: 23px;
+        line-height: 1.4;
+        max-width: 300px;
+        font-weight: 500;
+      }
+      .footer-top p {
+        font-size: 12px;
+        line-height: 1.8;
+        max-width: 310px;
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        border-top: 1px solid #ffffff25;
+        padding-top: 25px;
+        font-size: 10px;
+      }
+      .footer-bottom nav {
+        display: flex;
+        gap: 22px;
+      }
+      .search-dialog {
+        width: min(700px, 92vw);
+        max-height: 80vh;
+        border: 0;
+        padding: 30px;
+        background: var(--paper);
+        color: var(--ink);
+        border-radius: 6px;
+      }
+      .search-dialog::backdrop {
+        background: #0c2c25aa;
+        backdrop-filter: blur(5px);
+      }
+      .search-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .search-top button {
+        border: 0;
+        background: none;
+        font-size: 25px;
+      }
+      .search-dialog input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .search-results a {
+        display: block;
+        padding: 17px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .search-results small {
+        display: block;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .page-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: calc(var(--progress) * 100%);
+        background: #c7d879;
+        z-index: 50;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .empty {
+        padding: 25px;
+        color: var(--muted);
+      }
+      @media (min-width: 1600px) {
+        .hero-content {
+          padding-top: 12vh;
+        }
+        .hero {
+          min-height: 780px;
+        }
+      }
+      @media (max-width: 900px) {
+        .identity {
+          padding: 15px 5%;
+        }
+        .brand-name {
+          font-size: 14px;
+        }
+        .brand img {
+          width: 46px;
+          height: 46px;
+        }
+        .brand small {
+          font-size: 9px;
+        }
+        .header-tools {
+          gap: 12px;
+        }
+        .seal {
+          width: 38px;
+          height: 38px;
+        }
+        .nav {
+          overflow: auto;
+          justify-content: flex-start;
+          gap: 25px;
+          padding: 0 5%;
+        }
+        .hero {
+          min-height: 650px;
+        }
+        .hero-content {
+          padding-top: 70px;
+        }
+        .section {
+          padding: 70px 6%;
+        }
+        .story {
+          gap: 5%;
+        }
+        .story-visual {
+          height: 440px;
+        }
+        .story-figure strong {
+          font-size: 80px;
+        }
+        .story-step h3 {
+          font-size: 29px;
+        }
+        .section-heading {
+          gap: 25px;
+        }
+        .updates {
+          gap: 30px;
+        }
+        .utility-links a:first-child {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .utility {
+          font-size: 9px;
+          padding: 9px 5%;
+        }
+        .utility-links {
+          gap: 12px;
+        }
+        .brand-name {
+          max-width: 180px;
+          font-size: 12px;
+        }
+        .brand small {
+          font-size: 8px;
+          letter-spacing: 0;
+        }
+        .brand img {
+          width: 40px;
+          height: 40px;
+        }
+        .seal {
+          display: none;
+        }
+        .lang {
+          padding: 7px 10px;
+          font-size: 11px;
+        }
+        .header-tools {
+          gap: 6px;
+        }
+        .nav {
+          gap: 22px;
+        }
+        .nav a {
+          font-size: 11px;
+          padding: 12px 0;
+        }
+        .hero {
+          height: 740px;
+          min-height: 0;
+          max-height: none;
+        }
+        .hero-content {
+          padding: 65px 6% 0;
+        }
+        h1 {
+          font-size: 54px;
+        }
+        .hero-copy {
+          font-size: 14px;
+          max-width: 300px;
+        }
+        .hero-bottom {
+          left: 6%;
+          right: 6%;
+          bottom: 25px;
+          align-items: center;
+        }
+        .hero-stat {
+          gap: 10px;
+        }
+        .hero-stat strong {
+          font-size: 44px;
+        }
+        .hero-stat small {
+          max-width: 85px;
+          font-size: 9px;
+        }
+        .scroll-link {
+          font-size: 0;
+          gap: 0;
+        }
+        .scroll-link span {
+          font-size: 16px;
+        }
+        .hero-coordinate {
+          right: 3%;
+          top: 45%;
+        }
+        .notice-strip {
+          padding: 18px 6%;
+          gap: 14px;
+          line-height: 1.7;
+          font-size: 11px;
+        }
+        .notice-strip strong {
+          font-size: 9px;
+        }
+        .section-heading {
+          display: block;
+        }
+        .section-heading h2 {
+          font-size: 36px;
+        }
+        .section-heading p {
+          margin-top: 25px;
+        }
+        .story {
+          display: block;
+        }
+        .story-visual {
+          position: sticky;
+          top: 120px;
+          height: 265px;
+          z-index: 2;
+        }
+        .story-figure strong {
+          font-size: 78px;
+        }
+        .orbit {
+          width: 260px;
+          height: 260px;
+        }
+        .visual-caption {
+          bottom: 18px;
+          left: 20px;
+          right: 20px;
+          font-size: 8px;
+        }
+        .chapter-nav {
+          top: 20px;
+          left: 20px;
+          right: 20px;
+        }
+        .story-step {
+          min-height: 390px;
+          padding: 50px 0;
+        }
+        .access-grid {
+          grid-template-columns: 1fr;
+        }
+        .access-card,
+        .access-card:first-child {
+          padding: 30px 0;
+          min-height: 0;
+          border-right: 0;
+          border-bottom: 1px solid #ffffff30;
+        }
+        .access-card:last-child {
+          border-bottom: 0;
+        }
+        .access-card .icon {
+          margin-bottom: 20px;
+        }
+        .updates {
+          grid-template-columns: 1fr;
+        }
+        .photo-card {
+          height: 340px;
+        }
+        .footer-top {
+          display: block;
+        }
+        .footer-top p {
+          margin-top: 25px;
+        }
+        .footer-bottom {
+          line-height: 1.8;
+        }
+        .view-banner {
+          padding: 45px 6%;
+        }
+        .view-banner h1 {
+          font-size: 38px;
+        }
+        .content-block h2 {
+          font-size: 26px;
+        }
+        .document-row {
+          align-items: start;
+          font-size: 13px;
+        }
+        .portal {
+          padding: 22px;
+        }
+        .portal-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *:before,
+        *:after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      class="skip"
+      href="#main"
+      data-en="Skip to main content"
+      data-hi="मुख्य सामग्री पर जाएँ"
+      >Skip to main content</a
+    >
+    <div class="page-progress" aria-hidden="true"></div>
+    <div class="utility">
+      <span
+        data-en="A Government of Jharkhand Undertaking"
+        data-hi="झारखंड सरकार का उपक्रम"
+        >A Government of Jharkhand Undertaking</span
+      >
+      <div class="utility-links">
+        <a href="#info/careers" data-en="Careers" data-hi="करियर">Careers</a
+        ><a
+          href="#contact/headquarter"
+          data-en="Contact us"
+          data-hi="संपर्क करें"
+          >Contact us</a
+        ><a
+          href="#login/employee"
+          data-en="Employee Login ↗"
+          data-hi="कर्मचारी लॉगिन ↗"
+          >Employee Login ↗</a
+        >
+      </div>
+    </div>
+    <header class="masthead">
+      <div class="identity">
+        <a class="brand" href="#home"
+          ><img src="https://tvnl.in/img/lg.png" alt="TVNL" />
+          <div>
+            <div
+              class="brand-name"
+              data-en="TENUGHAT VIDYUT NIGAM LIMITED"
+              data-hi="तेनुघाट विद्युत निगम लिमिटेड"
+            >
+              TENUGHAT VIDYUT NIGAM LIMITED
+            </div>
+            <small
+              data-en="ENERGY FOR JHARKHAND. PROGRESS FOR ALL."
+              data-hi="झारखंड की ऊर्जा। सबकी प्रगति।"
+              >ENERGY FOR JHARKHAND. PROGRESS FOR ALL.</small
+            >
+          </div></a
+        >
+        <div class="header-tools">
+          <button
+            class="search-button"
+            id="open-search"
+            aria-label="Search website"
+          >
+            ⌕</button
+          ><button class="lang" id="language" aria-label="Switch to Hindi">
+            हिन्दी ↔ EN</button
+          ><img class="seal" id="state-emblem" alt="Government of Jharkhand" />
+        </div>
+      </div>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="#home" aria-current="page">Home</a
+        ><a href="#company">The Company</a
+        ><a href="#generation">Power Generation</a
+        ><a href="#sustainability">Sustainability</a
+        ><a href="#tenders">Tenders</a><a href="#notices">Notices</a
+        ><a href="#media">Media</a><a href="#info">Info Desk</a
+        ><a href="#contact">Contact us</a><a href="#login">Login ↗</a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <div id="home-view">
+        <section class="hero">
+          <div class="hero-photo" id="hero-photo"></div>
+          <div class="hero-content">
+            <div
+              class="eyebrow"
+              data-en="Rooted in Jharkhand. Powering its future."
+              data-hi="झारखंड से जुड़ाव। भविष्य को ऊर्जा।"
+            >
+              Rooted in Jharkhand. Powering its future.
+            </div>
+            <h1>
+              <span data-en="Our energy." data-hi="हमारी ऊर्जा।"
+                >Our energy.</span
+              ><br /><em data-en="Our tomorrow." data-hi="हमारा कल।"
+                >Our tomorrow.</em
+              >
+            </h1>
+            <p
+              class="hero-copy"
+              data-en="From the heart of Lalpania, powering everyday life and the next chapter of Jharkhand’s growth."
+              data-hi="ललपनिया से जनजीवन को ऊर्जा देते हुए, झारखंड की प्रगति के अगले अध्याय की ओर।"
+            >
+              From the heart of Lalpania, powering everyday life and the next
+              chapter of Jharkhand’s growth.
+            </p>
+            <a class="pill light" href="#home/energy-story"
+              ><span data-en="Discover our energy" data-hi="हमारी ऊर्जा यात्रा"
+                >Discover our energy</span
+              ><span>↗</span></a
+            >
+          </div>
+          <div
+            class="hero-coordinate"
+            data-en="TENUGHAT THERMAL POWER STATION · LALPANIA"
+            data-hi="तेनुघाट ताप विद्युत केंद्र · ललपनिया"
+          >
+            TENUGHAT THERMAL POWER STATION · LALPANIA
+          </div>
+          <div class="hero-bottom">
+            <div class="hero-stat">
+              <strong>420 <span>MW</span></strong
+              ><small
+                data-en="Installed thermal generation capacity"
+                data-hi="स्थापित ताप विद्युत उत्पादन क्षमता"
+                >Installed thermal generation capacity</small
+              >
+            </div>
+            <div class="hero-stat">
+              <strong>2 <span>× 210</span></strong
+              ><small
+                data-en="Generating units. One shared purpose."
+                data-hi="उत्पादन इकाइयाँ। एक साझा उद्देश्य।"
+                >Generating units. One shared purpose.</small
+              >
+            </div>
+            <a href="#home/energy-story" class="scroll-link"
+              ><span>↓</span
+              ><b data-en="SCROLL TO EXPLORE" data-hi="आगे जानें"
+                >SCROLL TO EXPLORE</b
+              ></a
+            >
+          </div>
+        </section>
+        <div class="notice-strip">
+          <strong data-en="PUBLIC INFORMATION" data-hi="जन सूचना"
+            >PUBLIC INFORMATION</strong
+          ><a
+            href="#tenders"
+            data-en="Tender notices, extensions and procurement information"
+            data-hi="निविदा सूचनाएँ, अवधि विस्तार और खरीद संबंधी जानकारी"
+            >Tender notices, extensions and procurement information</a
+          ><a href="#tenders" class="arrow" aria-label="View tenders">↗</a>
+        </div>
+        <section class="section" id="energy-story">
+          <div
+            class="eyebrow"
+            data-en="01 / Our energy story"
+            data-hi="01 / हमारी ऊर्जा यात्रा"
+          >
+            01 / Our energy story
+          </div>
+          <div class="section-heading">
+            <h2
+              data-en="A foundation of power.\nA future of possibilities."
+              data-hi="ऊर्जा की मजबूत नींव।\nसंभावनाओं से भरा भविष्य।"
+            >
+              A foundation of power.<br />A future of possibilities.
+            </h2>
+            <p
+              data-en="Our story connects the power we generate today with the responsibility we carry for tomorrow."
+              data-hi="हमारी यात्रा आज के विद्युत उत्पादन को कल की जिम्मेदारियों से जोड़ती है।"
+            >
+              Our story connects the power we generate today with the
+              responsibility we carry for tomorrow.
+            </p>
+          </div>
+          <div class="story">
+            <div class="story-visual">
+              <nav class="chapter-nav" aria-label="Energy story chapters">
+                <a
+                  href="#home/story-today"
+                  class="active"
+                  aria-label="Today"
+                ></a
+                ><a href="#home/story-expansion" aria-label="Expansion"></a
+                ><a href="#home/story-solar" aria-label="Solar"></a>
+              </nav>
+              <div class="orbit"></div>
+              <div class="energy-line"></div>
+              <div class="story-figure">
+                <strong id="story-number">420</strong
+                ><span
+                  id="story-unit"
+                  data-en="MW · INSTALLED CAPACITY"
+                  data-hi="मेगावाट · स्थापित क्षमता"
+                  >MW · INSTALLED CAPACITY</span
+                >
+              </div>
+              <div class="visual-caption">
+                <span>TVNL / JHARKHAND</span
+                ><span id="story-index">01 — 03</span>
+              </div>
+            </div>
+            <div>
+              <article
+                class="story-step"
+                id="story-today"
+                data-figure="420"
+                data-chapter="0"
+              >
+                <span
+                  class="step-number"
+                  data-en="01 — THE POWER OF TODAY"
+                  data-hi="01 — आज की ऊर्जा"
+                  >01 — THE POWER OF TODAY</span
+                >
+                <h3
+                  data-en="Built here.\nFor the people here."
+                  data-hi="यहीं निर्मित।\nयहाँ के लोगों के लिए।"
+                >
+                  Built here.<br />For the people here.
+                </h3>
+                <p
+                  data-en="At Tenughat Thermal Power Station in Lalpania, Bokaro, two 210 MW units form the foundation of TVNL’s generation capacity. A lasting contribution to Jharkhand’s energy infrastructure."
+                  data-hi="बोकारो के ललपनिया स्थित तेनुघाट ताप विद्युत केंद्र की दो 210 मेगावाट इकाइयाँ टीवीएनएल की उत्पादन क्षमता का आधार हैं। झारखंड के ऊर्जा बुनियादी ढाँचे में एक स्थायी योगदान।"
+                >
+                  At Tenughat Thermal Power Station in Lalpania, Bokaro, two 210
+                  MW units form the foundation of TVNL’s generation capacity. A
+                  lasting contribution to Jharkhand’s energy infrastructure.
+                </p>
+                <a
+                  class="text-link"
+                  href="#generation"
+                  data-en="Explore power generation ↗"
+                  data-hi="विद्युत उत्पादन जानें ↗"
+                  >Explore power generation ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-expansion"
+                data-figure="1,740"
+                data-chapter="1"
+              >
+                <span
+                  class="step-number"
+                  data-en="02 — THE NEXT CHAPTER"
+                  data-hi="02 — अगला अध्याय"
+                  >02 — THE NEXT CHAPTER</span
+                >
+                <h3
+                  data-en="Thinking bigger.\nBuilding for tomorrow."
+                  data-hi="बड़ी सोच।\nकल के लिए निर्माण।"
+                >
+                  Thinking bigger.<br />Building for tomorrow.
+                </h3>
+                <p
+                  data-en="The planned addition of two 660 MW supercritical units would bring total thermal capacity to 1,740 MW. An expansion vision supported by the development of the Rajbar E&D coal block."
+                  data-hi="दो 660 मेगावाट सुपरक्रिटिकल इकाइयों के प्रस्तावित विस्तार से कुल ताप विद्युत क्षमता 1,740 मेगावाट होगी। राजबार ई एवं डी कोयला खंड का विकास इस विस्तार की परिकल्पना से जुड़ा है।"
+                >
+                  The planned addition of two 660 MW supercritical units would
+                  bring total thermal capacity to 1,740 MW. An expansion vision
+                  supported by the development of the Rajbar E&D coal block.
+                </p>
+                <a
+                  class="text-link"
+                  href="#generation/installed"
+                  data-en="View capacity & expansion ↗"
+                  data-hi="क्षमता और विस्तार देखें ↗"
+                  >View capacity & expansion ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-solar"
+                data-figure="50"
+                data-chapter="2"
+              >
+                <span
+                  class="step-number"
+                  data-en="03 — A BROADER ENERGY FUTURE"
+                  data-hi="03 — व्यापक ऊर्जा भविष्य"
+                  >03 — A BROADER ENERGY FUTURE</span
+                >
+                <h3
+                  data-en="New energy.\nShared responsibility."
+                  data-hi="नई ऊर्जा।\nसाझा जिम्मेदारी।"
+                >
+                  New energy.<br />Shared responsibility.
+                </h3>
+                <p
+                  data-en="A planned 50 MW solar photovoltaic project adds a new dimension to TVNL’s energy journey. Environmental reporting, ash management and community initiatives remain part of our public information commitment."
+                  data-hi="प्रस्तावित 50 मेगावाट सौर फोटोवोल्टिक परियोजना टीवीएनएल की ऊर्जा यात्रा को नया आयाम देती है। पर्यावरणीय रिपोर्टिंग, राख प्रबंधन और सामुदायिक पहल हमारी सार्वजनिक सूचना प्रतिबद्धता का हिस्सा हैं।"
+                >
+                  A planned 50 MW solar photovoltaic project adds a new
+                  dimension to TVNL’s energy journey. Environmental reporting,
+                  ash management and community initiatives remain part of our
+                  public information commitment.
+                </p>
+                <a
+                  class="text-link"
+                  href="#sustainability"
+                  data-en="Our sustainability focus ↗"
+                  data-hi="हमारा सतत विकास दृष्टिकोण ↗"
+                  >Our sustainability focus ↗</a
+                >
+              </article>
+            </div>
+          </div>
+        </section>
+        <section class="section green-section">
+          <div
+            class="eyebrow"
+            data-en="02 / Open information. Better access."
+            data-hi="02 / खुली जानकारी। बेहतर पहुँच।"
+          >
+            02 / Open information. Better access.
+          </div>
+          <div class="section-heading">
+            <h2
+              data-en="Public service begins\nwith public access."
+              data-hi="जनसेवा की शुरुआत\nजानकारी की पहुँच से।"
+            >
+              Public service begins<br />with public access.
+            </h2>
+            <p
+              data-en="Find the documents, opportunities and information you need. Clear pathways for citizens, partners and suppliers."
+              data-hi="आवश्यक दस्तावेज़, अवसर और जानकारी पाएँ। नागरिकों, सहयोगियों और आपूर्तिकर्ताओं के लिए सरल पहुँच।"
+            >
+              Find the documents, opportunities and information you need. Clear
+              pathways for citizens, partners and suppliers.
+            </p>
+          </div>
+          <div class="access-grid">
+            <a class="access-card" href="#tenders"
+              ><span class="icon">↗</span>
+              <h3 data-en="Tenders & procurement" data-hi="निविदाएँ और खरीद">
+                Tenders & procurement
+              </h3>
+              <p
+                data-en="Tender notices, extensions and bidding information in one place."
+                data-hi="निविदा सूचनाएँ, अवधि विस्तार और बोली संबंधी जानकारी एक स्थान पर।"
+              >
+                Tender notices, extensions and bidding information in one place.
+              </p>
+              <span
+                class="text-link"
+                data-en="View tenders ↗"
+                data-hi="निविदाएँ देखें ↗"
+                >View tenders ↗</span
+              ></a
+            ><a class="access-card" href="#info/documents"
+              ><span class="icon">▤</span>
+              <h3
+                data-en="Reports & disclosures"
+                data-hi="रिपोर्ट और प्रकटीकरण"
+              >
+                Reports & disclosures
+              </h3>
+              <p
+                data-en="Company reports, public documents and information resources."
+                data-hi="कंपनी रिपोर्ट, सार्वजनिक दस्तावेज़ और सूचना संसाधन।"
+              >
+                Company reports, public documents and information resources.
+              </p>
+              <span
+                class="text-link"
+                data-en="Explore information ↗"
+                data-hi="जानकारी देखें ↗"
+                >Explore information ↗</span
+              ></a
+            ><a class="access-card" href="#sustainability/environment"
+              ><span class="icon">◎</span>
+              <h3
+                data-en="Environment & community"
+                data-hi="पर्यावरण और समुदाय"
+              >
+                Environment & community
+              </h3>
+              <p
+                data-en="Environmental information, ash disposal reporting and CSR."
+                data-hi="पर्यावरण संबंधी जानकारी, राख निस्तारण रिपोर्ट और सीएसआर।"
+              >
+                Environmental information, ash disposal reporting and CSR.
+              </p>
+              <span
+                class="text-link"
+                data-en="Read more ↗"
+                data-hi="अधिक जानें ↗"
+                >Read more ↗</span
+              ></a
+            >
+          </div>
+        </section>
+        <section class="section">
+          <div
+            class="eyebrow"
+            data-en="03 / Connected to our state"
+            data-hi="03 / अपने राज्य से जुड़ाव"
+          >
+            03 / Connected to our state
+          </div>
+          <div class="section-heading">
+            <h2
+              data-en="At the heart\nof Jharkhand."
+              data-hi="झारखंड के\nहृदय में।"
+            >
+              At the heart<br />of Jharkhand.
+            </h2>
+            <a
+              class="pill"
+              href="#media"
+              data-en="News & information ↗"
+              data-hi="समाचार और जानकारी ↗"
+              >News & information ↗</a
+            >
+          </div>
+          <div class="updates">
+            <div class="photo-card">
+              <img
+                id="plant-photo"
+                src="https://tvnl.in/img/slider/1.jpg"
+                alt="Tenughat Thermal Power Station"
+                loading="lazy"
+              />
+              <div>
+                <span
+                  class="eyebrow"
+                  data-en="LALPANIA · BOKARO"
+                  data-hi="ललपनिया · बोकारो"
+                  >LALPANIA · BOKARO</span
+                >
+                <h3
+                  data-en="Where our energy begins."
+                  data-hi="जहाँ हमारी ऊर्जा का आरंभ होता है।"
+                >
+                  Where our energy begins.
+                </h3>
+              </div>
+            </div>
+            <div>
+              <a href="#company" class="update-item"
+                ><small data-en="The company" data-hi="कंपनी"
+                  >The company</small
+                >
+                <h3
+                  data-en="An enduring commitment to the state we serve."
+                  data-hi="अपने राज्य के प्रति स्थायी प्रतिबद्धता।"
+                >
+                  An enduring commitment to the state we serve.
+                </h3>
+                <span>↗</span></a
+              ><a href="#contact/headquarter" class="update-item"
+                ><small data-en="Headquarter" data-hi="मुख्यालय"
+                  >Headquarter</small
+                >
+                <h3
+                  data-en="Find us at Ranchi Smart City, Dhurwa."
+                  data-hi="राँची स्मार्ट सिटी, धुर्वा स्थित हमारा कार्यालय।"
+                >
+                  Find us at Ranchi Smart City, Dhurwa.
+                </h3>
+                <span>↗</span></a
+              ><a href="#notices" class="update-item"
+                ><small data-en="Public information" data-hi="जन सूचना"
+                  >Public information</small
+                >
+                <h3
+                  data-en="Circulars, office orders and public notices."
+                  data-hi="परिपत्र, कार्यालय आदेश और सार्वजनिक सूचनाएँ।"
+                >
+                  Circulars, office orders and public notices.
+                </h3>
+                <span>↗</span></a
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+      <div id="detail-view" hidden></div>
+    </main>
+    <footer>
+      <div class="footer-top">
+        <h2
+          data-en="Tenughat Vidyut\nNigam Limited"
+          data-hi="तेनुघाट विद्युत\nनिगम लिमिटेड"
+        >
+          Tenughat Vidyut<br />Nigam Limited
+        </h2>
+        <p
+          data-en="JUPMI Building, Ranchi Smart City, Dhurwa, Ranchi, Jharkhand — 834004"
+          data-hi="जुपमी भवन, राँची स्मार्ट सिटी, धुर्वा, राँची, झारखंड — 834004"
+        >
+          JUPMI Building, Ranchi Smart City, Dhurwa, Ranchi, Jharkhand — 834004
+        </p>
+        <a
+          class="text-link"
+          href="#contact"
+          data-en="Get in touch ↗"
+          data-hi="संपर्क करें ↗"
+          >Get in touch ↗</a
+        >
+      </div>
+      <div class="footer-bottom">
+        <span
+          data-en="TVNL · A Government of Jharkhand Undertaking"
+          data-hi="टीवीएनएल · झारखंड सरकार का उपक्रम"
+          >TVNL · A Government of Jharkhand Undertaking</span
+        >
+        <nav>
+          <a
+            href="#info/documents"
+            data-en="Documents & Reports"
+            data-hi="दस्तावेज़ और रिपोर्ट"
+            >Documents & Reports</a
+          ><a
+            href="#company/policies"
+            data-en="Policies & Guidelines"
+            data-hi="नीतियाँ और दिशानिर्देश"
+            >Policies & Guidelines</a
+          ><a
+            href="#info/grievance"
+            data-en="Grievance Redressal"
+            data-hi="शिकायत निवारण"
+            >Grievance Redressal</a
+          >
+        </nav>
+      </div>
+    </footer>
+    <dialog class="search-dialog" id="search-dialog">
+      <div class="search-top">
+        <h2 data-en="Search TVNL" data-hi="टीवीएनएल में खोजें">Search TVNL</h2>
+        <button id="close-search" aria-label="Close search">×</button>
+      </div>
+      <label
+        for="site-search"
+        data-en="Search sections, reports and services"
+        data-hi="अनुभाग, रिपोर्ट और सेवाएँ खोजें"
+        >Search sections, reports and services</label
+      ><input id="site-search" type="search" autocomplete="off" />
+      <div class="search-results" id="search-results"></div>
+    </dialog>
+    <script src="site.js"></script>
+  </body>
+</html>
