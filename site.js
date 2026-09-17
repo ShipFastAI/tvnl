@@ -2,6 +2,12 @@
 const pair = (en, hi) => ({ en, hi })
 let language = 'en'
 let currentView = 'home'
+const scrapedPages = Array.isArray(globalThis.TVNL_SCRAPED_PAGES)
+  ? globalThis.TVNL_SCRAPED_PAGES
+  : []
+const scrapedDocuments = Array.isArray(globalThis.TVNL_SCRAPED_DOCUMENTS)
+  ? globalThis.TVNL_SCRAPED_DOCUMENTS
+  : []
 const t = (value) => value[language]
 const escapeText = (value) =>
   String(value).replace(
@@ -493,10 +499,51 @@ const tenders = [
     title: pair('IT equipment annual maintenance', 'आईटी उपकरण वार्षिक रखरखाव'),
   },
 ]
-const sourceLink = (path) =>
-  path.startsWith('https://') ? path : `https://tvnl.in/${path}`
-const officialLink = (path) =>
-  `<a class="text-link" href="${sourceLink(path)}" target="_blank" rel="noopener noreferrer">${t(pair('View official record ↗', 'आधिकारिक अभिलेख देखें ↗'))}</a>`
+const recordPath = (value) => `/${String(value || '').replace(/^\/+/, '')}`
+const pageRecord = (value) =>
+  scrapedPages.find((record) => record.sourcePath === recordPath(value))
+const recordTitle = (record) => {
+  const item = Object.values(pages)
+    .flatMap((page) => page.sections)
+    .find((entry) => recordPath(entry.source) === record.sourcePath)
+  return item ? t(item.title) : record.title
+}
+const recordHref = (value) => {
+  const document = scrapedDocuments.find(
+    (record) => record.sourcePath === recordPath(value),
+  )
+  const record = pageRecord(value)
+  return document?.localPath || (record ? `#info/record-${record.id}` : null)
+}
+const recordLinks = (record) =>
+  record.links
+    .map((link) => {
+      const href = recordHref(link.path)
+      return href
+        ? `<a class="text-link" href="${escapeText(href)}">${escapeText(link.label || link.path.split('/').pop())} ↗</a>`
+        : ''
+    })
+    .join('')
+const sourceRecord = (path) => {
+  const record = pageRecord(path)
+  if (record)
+    return `<details class="record-body"><summary>${t(pair('Read the full record', 'पूरा अभिलेख पढ़ें'))}</summary><div class="record-text">${escapeText(record.text)}</div><div class="record-links">${recordLinks(record)}</div></details>`
+  const href = recordHref(path)
+  if (href)
+    return `<a class="text-link" href="${escapeText(href)}">${t(pair('Open document ↓', 'दस्तावेज़ खोलें ↓'))}</a>`
+  if (path?.startsWith('https://jserc.org/'))
+    return `<a class="text-link" href="${escapeText(path)}" target="_blank" rel="noopener noreferrer">${t(pair('Read JSERC public record ↗', 'जेएसईआरसी अभिलेख पढ़ें ↗'))}</a>`
+  return `<p>${t(pair('This document is not available in the current collection.', 'यह दस्तावेज़ वर्तमान संग्रह में उपलब्ध नहीं है।'))}</p>`
+}
+const archiveMarkup = () =>
+  `<div class="archive-panel"><div class="archive-head"><div><span class="eyebrow">${t(pair('Public information', 'जन सूचना'))}</span><h3>${t(pair('Information within reach.', 'जानकारी आपकी पहुँच में।'))}</h3></div><strong>${scrapedPages.length} <small>${t(pair('public records', 'जन अभिलेख'))}</small></strong></div><div class="archive-grid">${scrapedPages
+    .map(
+      (record) =>
+        `<article class="archive-card"><h4><a href="#info/record-${escapeText(record.id)}">${escapeText(recordTitle(record))} ↗</a></h4><details class="record-body" id="record-${escapeText(record.id)}"><summary>${t(pair('Read record', 'अभिलेख पढ़ें'))}</summary><div class="record-text">${escapeText(record.text)}</div><div class="record-links">${recordLinks(record)}</div></details></article>`,
+    )
+    .join(
+      '',
+    )}</div>${scrapedDocuments.length ? `<div class="archive-documents"><strong>${t(pair('Locally stored public documents', 'स्थानीय रूप से संग्रहीत जन दस्तावेज़'))}</strong>${scrapedDocuments.map((document) => `<a class="document-row" href="${escapeText(document.localPath)}" download><span>${escapeText(document.label)}</span><small>LOCAL PDF ↓</small></a>`).join('')}</div>` : ''}</div>`
 const tenderMarkup = () =>
   `<div class="filterbar"><input id="tender-search" type="search" aria-label="${t(pair('Search NIT or subject', 'एनआईटी या विषय खोजें'))}" placeholder="${t(pair('Search NIT number or subject…', 'एनआईटी संख्या या विषय खोजें…'))}"><select id="tender-category" aria-label="${t(pair('Tender category', 'निविदा श्रेणी'))}"><option value="all">${t(pair('All categories', 'सभी श्रेणियाँ'))}</option><option value="solar">${t(pair('Solar', 'सौर'))}</option><option value="coal">${t(pair('Coal block', 'कोयला खंड'))}</option><option value="it">${t(pair('IT', 'सूचना प्रौद्योगिकी'))}</option></select></div><div id="tender-results" aria-live="polite"></div>`
 const renderTenders = () => {
@@ -516,7 +563,7 @@ const renderTenders = () => {
     ? matches
         .map(
           (record) =>
-            `<a class="document-row" href="https://tvnl.in/tndr_noti.php" target="_blank" rel="noopener noreferrer"><div><strong>${t(record.title)}</strong><small>NIT ${record.nit}</small><small>${t(pair('Published record · Check official notice for current dates and status', 'प्रकाशित अभिलेख · वर्तमान तिथियों और स्थिति के लिए आधिकारिक सूचना देखें'))}</small></div><span>↗</span></a>`,
+            `<details class="document-row tender-record"><summary><strong>${t(record.title)}</strong><small>NIT ${record.nit}</small></summary><p>${t(pair('Published procurement record', 'प्रकाशित खरीद अभिलेख'))} · ${escapeText(record.nit)}</p>${sourceRecord('tndr_noti.php')}</details>`,
         )
         .join('')
     : `<p class="empty">${t(pair('No matching records. Try another NIT number or category.', 'कोई मेल खाता अभिलेख नहीं मिला। दूसरी एनआईटी संख्या या श्रेणी आज़माएँ।'))}</p>`
@@ -538,10 +585,25 @@ const renderPortal = (id, stage = 'open') => {
         ? `<h3>${t(pair('Demo receipt', 'डेमो रसीद'))}</h3><p>DEMO-RECEIPT-001 · ₹1,000</p><p>${t(pair('Simulated transaction. No money was collected.', 'अनुकरणित लेनदेन। कोई धनराशि नहीं ली गई।'))}</p>`
         : `<h3>${t(pair('Review demo payment', 'डेमो भुगतान की समीक्षा'))}</h3><p>${escapeText(document.querySelector('#payment-tender').value)} · ₹1,000</p><button data-stage="receipt" data-portal="payment">${t(pair('Generate demo receipt', 'डेमो रसीद बनाएँ'))}</button>`
 }
+const renderPageSection = (key, item) => {
+  const extras = [
+    key === 'login' ? portalMarkup(item.id) : '',
+    item.id === 'tender-notices' ? tenderMarkup() : '',
+    item.id === 'gallery'
+      ? `<div class="updates"><img src="assets/plant-sl1.jpg" alt="${t(pair('Tenughat Thermal Power Station buildings', 'तेनुघाट ताप विद्युत केंद्र के भवन'))}" loading="lazy"><img src="assets/plant-sl2.jpg" alt="${t(pair('Tenughat power station switchyard', 'तेनुघाट विद्युत केंद्र स्विचयार्ड'))}" loading="lazy"></div>`
+      : '',
+    item.id === 'documents' ? archiveMarkup() : '',
+    item.source ? sourceRecord(item.source) : '',
+    item.id === 'links'
+      ? `<div class="document-row"><a href="https://jserc.org/tvnl.aspx" target="_blank" rel="noopener noreferrer">${t(pair('JSERC — TVNL filings ↗', 'जेएसईआरसी — टीवीएनएल दाखिले ↗'))}</a><a href="https://jharkhandtenders.gov.in" target="_blank" rel="noopener noreferrer">${t(pair('Jharkhand eProcurement ↗', 'झारखंड ई-प्रोक्योरमेंट ↗'))}</a></div>`
+      : '',
+  ].join('')
+  return `<section class="content-block" id="${escapeText(item.id)}"><h2>${t(item.title)}</h2><p>${t(item.body)}</p>${extras}</section>`
+}
 const renderDetail = (key) => {
   const page = pages[key]
   document.querySelector('#detail-view').innerHTML =
-    `<div class="view-banner"><div class="eyebrow">TVNL / ${escapeText(t(page.title))}</div><h1>${t(page.title)}</h1><p>${t(page.intro)}</p></div><nav class="subnav" aria-label="${t(pair('Section navigation', 'अनुभाग नेविगेशन'))}">${page.sections.map((item) => `<a href="#${key}/${item.id}">${t(item.title)}</a>`).join('')}</nav><div class="content-sections">${page.sections.map((item) => `<section class="content-block" id="${item.id}"><h2>${t(item.title)}</h2><p>${t(item.body)}</p>${key === 'login' ? portalMarkup(item.id) : ''}${item.id === 'tender-notices' ? tenderMarkup() : ''}${item.id === 'gallery' ? `<div class="updates"><img src="https://tvnl.in/img/sl1.jpg" alt="${t(pair('Tenughat Thermal Power Station buildings', 'तेनुघाट ताप विद्युत केंद्र के भवन'))}" loading="lazy"><img src="https://tvnl.in/img/sl2.jpg" alt="${t(pair('Tenughat power station switchyard', 'तेनुघाट विद्युत केंद्र स्विचयार्ड'))}" loading="lazy"></div>` : ''}${item.source ? officialLink(item.source) : ''}${item.id === 'links' ? `<div class="document-row"><a href="https://jserc.org/tvnl.aspx" target="_blank" rel="noopener noreferrer">${t(pair('JSERC — TVNL filings ↗', 'जेएसईआरसी — टीवीएनएल दाखिले ↗'))}</a><a href="https://jharkhandtenders.gov.in" target="_blank" rel="noopener noreferrer">${t(pair('Jharkhand eProcurement ↗', 'झारखंड ई-प्रोक्योरमेंट ↗'))}</a></div>` : ''}</section>`).join('')}</div>`
+    `<div class="view-banner"><div class="eyebrow">TVNL / ${escapeText(t(page.title))}</div><h1>${t(page.title)}</h1><p>${t(page.intro)}</p></div><nav class="subnav" aria-label="${t(pair('Section navigation', 'अनुभाग नेविगेशन'))}">${page.sections.map((item) => `<a href="#${key}/${item.id}">${t(item.title)}</a>`).join('')}</nav><div class="content-sections">${page.sections.map((item) => renderPageSection(key, item)).join('')}</div>`
   if (key === 'tenders') {
     renderTenders()
     document
@@ -555,7 +617,7 @@ const renderDetail = (key) => {
 const applyLanguage = () => {
   document.documentElement.lang = language
   document.querySelectorAll('[data-en][data-hi]').forEach((element) => {
-    element.textContent = element.dataset[language]
+    element.textContent = element.dataset[language].replace(/\\n/g, '\n')
     element.style.whiteSpace = 'pre-line'
   })
   document.querySelectorAll('#main-nav a').forEach((link) => {
@@ -607,8 +669,14 @@ const route = (keepScroll = false) => {
   if (!keepScroll)
     requestAnimationFrame(() => {
       const element = anchor ? document.getElementById(anchor) : null
-      if (element) element.scrollIntoView({ behavior: 'instant' })
-      else if (changed || !anchor)
+      if (element) {
+        if (element.tagName === 'DETAILS') element.open = true
+        if (element.tagName === 'DETAILS') {
+          element.setAttribute('tabindex', '-1')
+          element.focus({ preventScroll: true })
+        }
+        element.scrollIntoView({ behavior: 'instant' })
+      } else if (changed || !anchor)
         window.scrollTo({ top: 0, behavior: 'instant' })
     })
 }
@@ -617,64 +685,368 @@ const search = () => {
     .querySelector('#site-search')
     .value.trim()
     .toLowerCase()
-  const records = Object.entries(pages)
-    .flatMap(([key, page]) =>
+  const records = [
+    ...Object.entries(pages).flatMap(([key, page]) =>
       page.sections.map((item) => ({ key, page, item })),
-    )
-    .filter(({ item }) =>
-      `${item.title.en} ${item.title.hi} ${item.body.en} ${item.body.hi}`
-        .toLowerCase()
-        .includes(query),
-    )
+    ),
+    ...scrapedPages.map((record) => ({
+      key: 'info',
+      page: pages.info,
+      item: {
+        id: `record-${record.id}`,
+        title: pair(recordTitle(record), recordTitle(record)),
+        body: pair(record.text, record.text),
+      },
+    })),
+  ].filter(({ item }) =>
+    `${item.title.en} ${item.title.hi} ${item.body.en} ${item.body.hi}`
+      .toLowerCase()
+      .includes(query),
+  )
   document.querySelector('#search-results').innerHTML = records.length
     ? records
         .slice(0, 15)
         .map(
           ({ key, page, item }) =>
-            `<a href="#${key}/${item.id}">${t(item.title)}<small>${t(page.title)}</small></a>`,
+            `<a href="#${key}/${escapeText(item.id)}">${escapeText(t(item.title))}<small>${t(page.title)}</small></a>`,
         )
         .join('')
     : `<p class="empty">${t(pair('No results found. Try another search.', 'कोई परिणाम नहीं मिला। अन्य शब्द से खोजें।'))}</p>`
 }
+let thermal3DInstance = null
+const initThermal3D = () => {
+  return { setChapterView: () => {} }
+}
+const _unusedInitThermal3D = () => {
+  try {
+    const renderers = canvases.map((canvas) => {
+      const scene = new THREE.Scene()
+      scene.fog = new THREE.FogExp2(0x161c24, 0.015)
+
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000)
+      camera.position.set(0, 10, 30)
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+      })
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+
+      const resize = () => {
+        const parent = canvas.parentElement
+        if (!parent) return
+        const width = parent.clientWidth
+        const height = parent.clientHeight
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+        renderer.setSize(width, height, false)
+      }
+      resize()
+      window.addEventListener('resize', resize)
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8))
+      const pointLight = new THREE.PointLight(0x628ad1, 3, 40)
+      pointLight.position.set(0, 10, 10)
+      scene.add(pointLight)
+
+      const mainGroup = new THREE.Group()
+      scene.add(mainGroup)
+
+      // 1. Concentric Energy Rings
+      const ringGroup = new THREE.Group()
+      mainGroup.add(ringGroup)
+
+      const ringMat1 = new THREE.MeshBasicMaterial({
+        color: 0x628ad1,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6,
+      })
+      const ringMat2 = new THREE.MeshBasicMaterial({
+        color: 0xd3e7ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.4,
+      })
+      const ringMat3 = new THREE.MeshBasicMaterial({
+        color: 0xff9900,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.5,
+      })
+
+      const ring1 = new THREE.Mesh(
+        new THREE.TorusGeometry(8, 0.15, 16, 64),
+        ringMat1,
+      )
+      const ring2 = new THREE.Mesh(
+        new THREE.TorusGeometry(12, 0.1, 16, 64),
+        ringMat2,
+      )
+      const ring3 = new THREE.Mesh(
+        new THREE.TorusGeometry(5, 0.2, 16, 48),
+        ringMat3,
+      )
+
+      ring1.rotation.x = Math.PI / 3
+      ring2.rotation.y = Math.PI / 4
+      ring3.rotation.z = Math.PI / 6
+
+      ringGroup.add(ring1)
+      ringGroup.add(ring2)
+      ringGroup.add(ring3)
+
+      // 2. High-Density Organic Particle Wave Grid (40x40 = 1,600 particles)
+      const cols = 45
+      const rows = 40
+      const numParticles = cols * rows
+      const particleGeo = new THREE.BufferGeometry()
+      const posArray = new Float32Array(numParticles * 3)
+      const colArray = new Float32Array(numParticles * 3)
+
+      const basePos = new Float32Array(numParticles * 3)
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const index = i * rows + j
+          const u = (i / cols - 0.5) * 32
+          const v = (j / rows - 0.5) * 24
+
+          posArray[index * 3] = u
+          posArray[index * 3 + 1] = 0
+          posArray[index * 3 + 2] = v
+
+          basePos[index * 3] = u
+          basePos[index * 3 + 1] = 0
+          basePos[index * 3 + 2] = v
+
+          // Color gradient: Cyan -> Blue -> Amber
+          const ratio = i / cols
+          if (ratio < 0.6) {
+            colArray[index * 3] = 0.38 + ratio * 0.4
+            colArray[index * 3 + 1] = 0.54 + ratio * 0.3
+            colArray[index * 3 + 2] = 0.82 + ratio * 0.18
+          } else {
+            colArray[index * 3] = 1.0
+            colArray[index * 3 + 1] = 0.6 - (ratio - 0.6) * 0.8
+            colArray[index * 3 + 2] = 0.1
+          }
+        }
+      }
+
+      particleGeo.setAttribute(
+        'position',
+        new THREE.BufferAttribute(posArray, 3),
+      )
+      particleGeo.setAttribute('color', new THREE.BufferAttribute(colArray, 3))
+
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.28,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85,
+      })
+
+      const particleGrid = new THREE.Points(particleGeo, particleMat)
+      mainGroup.add(particleGrid)
+
+      // Camera Lerp Targets per Chapter
+      const targetCamPos = new THREE.Vector3(0, 10, 30)
+      const targetLookAt = new THREE.Vector3(0, 0, 0)
+      const currentLookAt = new THREE.Vector3(0, 0, 0)
+      let waveFreq = 1.0
+      let targetFreq = 1.0
+
+      const chapterViews = [
+        {
+          pos: new THREE.Vector3(0, 12, 30),
+          look: new THREE.Vector3(0, 0, 0),
+          freq: 1.0,
+        },
+        {
+          pos: new THREE.Vector3(-10, 8, 20),
+          look: new THREE.Vector3(-4, 0, 0),
+          freq: 1.8,
+        },
+        {
+          pos: new THREE.Vector3(8, 6, 18),
+          look: new THREE.Vector3(4, 0, 0),
+          freq: 2.4,
+        },
+        {
+          pos: new THREE.Vector3(0, 20, 36),
+          look: new THREE.Vector3(0, 0, 0),
+          freq: 1.2,
+        },
+        {
+          pos: new THREE.Vector3(-12, 10, 22),
+          look: new THREE.Vector3(-6, -2, 0),
+          freq: 1.5,
+        },
+        {
+          pos: new THREE.Vector3(12, 12, 24),
+          look: new THREE.Vector3(6, 0, 0),
+          freq: 0.8,
+        },
+        {
+          pos: new THREE.Vector3(0, 8, 26),
+          look: new THREE.Vector3(0, 0, 0),
+          freq: 3.0,
+        },
+        {
+          pos: new THREE.Vector3(0, 14, 32),
+          look: new THREE.Vector3(0, 0, 0),
+          freq: 1.0,
+        },
+      ]
+
+      const setChapterView = (idx) => {
+        const view = chapterViews[idx] || chapterViews[0]
+        targetCamPos.copy(view.pos)
+        targetLookAt.copy(view.look)
+        targetFreq = view.freq
+      }
+
+      let clock = 0
+      let reqId
+      const animate = () => {
+        reqId = requestAnimationFrame(animate)
+        clock += 0.02
+        waveFreq += (targetFreq - waveFreq) * 0.05
+
+        // Rotate rings dynamically
+        ring1.rotation.x += 0.005
+        ring1.rotation.y += 0.008
+        ring2.rotation.y -= 0.006
+        ring2.rotation.z += 0.004
+        ring3.rotation.z += 0.01
+
+        // Animate organic 3D particle wave heights
+        const positions = particleGeo.attributes.position.array
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            const idx = i * rows + j
+            const u = basePos[idx * 3]
+            const v = basePos[idx * 3 + 2]
+            positions[idx * 3 + 1] =
+              Math.sin(u * 0.2 * waveFreq + clock) * 1.5 +
+              Math.cos(v * 0.25 * waveFreq + clock * 0.8) * 1.2
+          }
+        }
+        particleGeo.attributes.position.needsUpdate = true
+
+        // Lerp Camera & Turn Group
+        camera.position.lerp(targetCamPos, 0.04)
+        currentLookAt.lerp(targetLookAt, 0.04)
+        camera.lookAt(currentLookAt)
+
+        mainGroup.rotation.y = Math.sin(clock * 0.15) * 0.25
+
+        renderer.render(scene, camera)
+      }
+      animate()
+
+      return { setChapterView }
+    })
+
+    return {
+      setChapterView: (idx) => renderers.forEach((r) => r.setChapterView(idx)),
+    }
+  } catch (err) {
+    console.error('Thermal 3D Canvas error:', err)
+    return null
+  }
+}
+
+const storySteps = [...document.querySelectorAll('.story-step')]
+const storyVisual = document.querySelector('.story-visual')
+let figureTimer
 const updateStory = (chapter) => {
-  const figures = ['420', '1,740', '50']
-  const labels = [
-    pair('MW · INSTALLED CAPACITY', 'मेगावाट · स्थापित क्षमता'),
-    pair(
-      'MW · PLANNED TOTAL THERMAL CAPACITY',
-      'मेगावाट · प्रस्तावित कुल ताप क्षमता',
-    ),
-    pair('MW · PLANNED SOLAR PROJECT', 'मेगावाट · प्रस्तावित सौर परियोजना'),
-  ]
-  document.querySelector('#story-number').textContent = figures[chapter]
-  document.querySelector('#story-unit').textContent = t(labels[chapter])
-  document.querySelector('#story-index').textContent = `0${chapter + 1} — 03`
-  document
-    .querySelectorAll('.chapter-nav a')
-    .forEach((link, index) =>
-      link.classList.toggle('active', index === chapter),
-    )
+  const step = storySteps.find(
+    (candidate) => Number(candidate.dataset.chapter) === chapter,
+  )
+  if (!step) return
+  if (!thermal3DInstance) thermal3DInstance = initThermal3D()
+  if (thermal3DInstance) thermal3DInstance.setChapterView(chapter)
+  const figure = document.querySelector('#story-number')
+  const nextFigure = step.dataset.figure || ''
+  const updateFigure = () => {
+    figure.textContent = nextFigure
+    figure.classList.remove('is-changing')
+  }
+  window.clearTimeout(figureTimer)
+  if (figure.textContent !== nextFigure) {
+    figure.classList.add('is-changing')
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      updateFigure()
+    else figureTimer = window.setTimeout(updateFigure, 160)
+  }
+  document.querySelector('#story-prefix').textContent =
+    language === 'en' ? step.dataset.kickerEn : step.dataset.kickerHi
+  document.querySelector('#story-unit').textContent =
+    language === 'en' ? step.dataset.unitEn : step.dataset.unitHi
+  document.querySelector('#story-location').textContent =
+    language === 'en' ? step.dataset.locationEn : step.dataset.locationHi
+  document.querySelector('#story-index').textContent =
+    `${String(chapter + 1).padStart(2, '0')} — 08`
+  storyVisual.dataset.theme = step.dataset.theme || 'arrival'
+  storyVisual.style.setProperty('--chapter-progress', String(chapter / 7))
+  storyVisual.style.setProperty('--path-offset', `${1100 - chapter * 145}px`)
+  storySteps.forEach((candidate) =>
+    candidate.classList.toggle('is-active', candidate === step),
+  )
+  document.querySelectorAll('.chapter-nav a').forEach((link, index) => {
+    link.classList.toggle('active', index === chapter)
+    if (index === chapter) link.setAttribute('aria-current', 'step')
+    else link.removeAttribute('aria-current')
+  })
 }
 let activeChapter = 0
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        activeChapter = Number(entry.target.dataset.chapter)
-        updateStory(activeChapter)
-      }
-    })
-  },
-  { rootMargin: '-25% 0px -30% 0px', threshold: 0 },
-)
-document
-  .querySelectorAll('.story-step')
-  .forEach((element) => observer.observe(element))
+const updateStoryScroll = () => {
+  const story = document.querySelector('#energy-story')
+  if (!story || currentView !== 'home') return
+  const bounds = story.getBoundingClientRect()
+  const travel = Math.max(1, bounds.height - innerHeight * 0.5)
+  const progress = Math.min(
+    1,
+    Math.max(0, (innerHeight * 0.25 - bounds.top) / travel),
+  )
+  storyVisual.style.setProperty('--story-progress', String(progress))
+  const readingLine = innerWidth <= 600 ? 410 : innerHeight * 0.48
+  const nearest = storySteps.reduce(
+    (best, step) =>
+      step.getBoundingClientRect().top <= readingLine ? step : best,
+    storySteps[0],
+  )
+  const chapter = Number(nearest.dataset.chapter)
+  if (chapter !== activeChapter) {
+    activeChapter = chapter
+    updateStory(chapter)
+  }
+  const scene = Math.min(
+    1,
+    Math.max(
+      0,
+      (readingLine - nearest.getBoundingClientRect().top) /
+        nearest.offsetHeight +
+        0.5,
+    ),
+  )
+  storyVisual.style.setProperty('--scene-progress', String(scene))
+}
+window.addEventListener('scroll', updateStoryScroll, { passive: true })
+
+const updateSchematicScroll = () =>
+  window.thermalCinematic?.update(language, currentView === 'home')
+window.addEventListener('scroll', updateSchematicScroll, { passive: true })
+
 document.querySelector('#language').addEventListener('click', () => {
   language = language === 'en' ? 'hi' : 'en'
   applyLanguage()
   route(true)
   updateStory(activeChapter)
+  updateSchematicScroll()
   search()
 })
 document.querySelector('#open-search').addEventListener('click', () => {
@@ -710,9 +1082,11 @@ window.addEventListener(
   { passive: true },
 )
 document.querySelector('#hero-photo').style.backgroundImage =
-  "linear-gradient(90deg,rgba(9,36,31,.85),rgba(9,36,31,.15)),linear-gradient(0deg,rgba(9,36,31,.8),transparent 65%),url('https://tvnl.in/img/sl2.jpg')"
-document.querySelector('#plant-photo').src = 'https://tvnl.in/img/sl1.jpg'
-document.querySelector('#state-emblem').src =
-  'https://www.jharkhand.gov.in/images/jhlogo55.PNG'
+  "linear-gradient(90deg,rgba(22,28,36,.88),rgba(22,28,36,.35)),linear-gradient(0deg,rgba(22,28,36,.85),transparent 60%),url('assets/plant-sl2.jpg')"
+document.querySelector('#plant-photo').src = 'assets/plant-sl1.jpg'
+document.querySelector('#state-emblem').src = 'assets/jharkhand-emblem.png'
 applyLanguage()
 route()
+updateStory(activeChapter)
+updateStoryScroll()
+updateSchematicScroll()

@@ -9,19 +9,37 @@
     />
     <title>TVNL · Energy for Jharkhand</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@200;250;300;400;500;600&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="../zettajoule/css/zettajoule.webflow.shared.48907b1f4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../zettajoule/css/zettajoule.webflow.695e44c5cda75248659e97e1.a71a5c3e9.opt.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
       :root {
-        --ink: #183e35;
-        --deep: #123c32;
-        --paper: #f5f4ed;
-        --lime: #d7ec86;
-        --line: #d6dbd0;
-        --muted: #5d6f65;
+        --ink: #1b1b1b;
+        --deep: #161c24;
+        --navy: #29313f;
+        --paper: #f1f0eb;
+        --paper-duck: #f1f5f8;
+        --lime: #628ad1;
+        --lime-soft: #d3e7ff;
+        --line: #cfcdc9;
+        --muted: #524f4b;
+        --muted-light: #7d7d7d;
         --progress: 0;
+        --font-heading: 'Geist', 'Avenir Next', 'Noto Sans Devanagari', sans-serif;
+        --font-body: 'Inter', system-ui, 'Noto Sans Devanagari', sans-serif;
       }
       * {
         box-sizing: border-box;
@@ -34,7 +52,10 @@
         margin: 0;
         background: var(--paper);
         color: var(--ink);
-        font-family: 'DM Sans', 'Noto Sans Devanagari', sans-serif;
+        font-family: var(--font-body);
+        letter-spacing: -0.01em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       button,
       input,
@@ -59,7 +80,7 @@
       }
       button:focus-visible,
       a:focus-visible {
-        outline: 3px solid #c59637;
+        outline: 2px solid var(--lime);
       }
       button {
         color: inherit;
@@ -78,13 +99,14 @@
         top: 0;
       }
       .utility {
-        background: var(--deep);
-        color: #e4eadf;
+        background: var(--navy);
+        color: #cfcdc9;
         display: flex;
         justify-content: space-between;
         padding: 9px 4.5%;
         font-size: 11px;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
       .utility-links {
         display: flex;
@@ -92,19 +114,22 @@
       }
       .utility a:hover {
         text-decoration: underline;
+        color: var(--lime-soft);
       }
       .masthead {
         position: sticky;
         top: 0;
         z-index: 20;
-        background: rgba(245, 244, 237, 0.98);
+        background: rgba(241, 240, 235, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--line);
       }
       .identity {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 4.5% 15px;
+        padding: 18px 4.5% 14px;
         gap: 20px;
       }
       .brand {
@@ -113,21 +138,23 @@
         align-items: center;
       }
       .brand img {
-        width: 58px;
-        height: 58px;
+        width: 54px;
+        height: 54px;
         object-fit: contain;
       }
       .brand-name {
-        font-family: Manrope, 'Noto Sans Devanagari', sans-serif;
-        font-weight: 800;
-        font-size: 17px;
-        letter-spacing: -0.6px;
+        font-family: var(--font-heading);
+        font-weight: 300;
+        font-size: 19px;
+        letter-spacing: -0.03em;
+        color: var(--ink);
       }
       .brand small {
         display: block;
         font-size: 10px;
         letter-spacing: 0.08em;
-        margin-top: 5px;
+        margin-top: 4px;
+        color: var(--muted);
       }
       .header-tools {
         display: flex;
@@ -136,20 +163,33 @@
       }
       .lang {
         border: 1px solid var(--line);
-        border-radius: 30px;
+        border-radius: 4px;
         background: transparent;
-        padding: 9px 15px;
+        padding: 8px 14px;
         font-size: 12px;
+        font-weight: 500;
+        color: var(--ink);
+        transition: all 0.2s ease;
+      }
+      .lang:hover {
+        background: var(--lime);
+        color: #ffffff;
+        border-color: var(--lime);
       }
       .seal {
-        width: 49px;
-        height: 49px;
+        width: 45px;
+        height: 45px;
         object-fit: contain;
       }
       .search-button {
         border: 0;
         background: none;
-        font-size: 23px;
+        font-size: 22px;
+        color: var(--ink);
+        transition: color 0.2s ease;
+      }
+      .search-button:hover {
+        color: var(--lime);
       }
       .nav {
         display: flex;
@@ -157,19 +197,25 @@
         justify-content: space-between;
         padding: 0 4.5%;
         gap: 12px;
+        border-top: 1px solid rgba(207, 205, 201, 0.4);
       }
       .nav a {
         font-size: 12px;
-        padding: 15px 0;
+        font-weight: 400;
+        padding: 14px 0;
         border-bottom: 2px solid transparent;
         white-space: nowrap;
+        color: var(--muted);
+        transition: all 0.2s ease;
       }
       .nav a[aria-current='page'] {
-        border-color: var(--deep);
-        font-weight: 700;
+        border-color: var(--lime);
+        color: var(--ink);
+        font-weight: 500;
       }
       .nav a:hover {
-        border-color: var(--ink);
+        color: var(--ink);
+        border-color: var(--line);
       }
       .menu-button {
         display: none;
@@ -182,15 +228,15 @@
         isolation: isolate;
         overflow: hidden;
         color: white;
-        background: #283f39;
+        background: var(--navy);
       }
       .hero-photo {
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(90deg, rgba(9, 36, 31, 0.8), rgba(9, 36, 31, 0.25)),
-          linear-gradient(0deg, rgba(9, 36, 31, 0.76), transparent 65%),
-          url('https://tvnl.in/img/slider/1.jpg') center/cover;
+          linear-gradient(90deg, rgba(22, 28, 36, 0.88), rgba(22, 28, 36, 0.35)),
+          linear-gradient(0deg, rgba(22, 28, 36, 0.85), transparent 60%),
+          url('assets/plant-sl1.jpg') center/cover;
         z-index: -2;
         transform: scale(1.025);
       }
@@ -200,7 +246,7 @@
         inset: 0;
         background: linear-gradient(
           110deg,
-          rgba(31, 61, 49, 0.35),
+          rgba(41, 49, 63, 0.4),
           transparent
         );
         z-index: -1;
@@ -210,11 +256,12 @@
         max-width: 980px;
       }
       .eyebrow {
+        font-family: var(--font-body);
         font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
+        font-weight: 500;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 10px;
       }
@@ -226,7 +273,7 @@
         background: currentColor;
       }
       .hero .eyebrow {
-        color: var(--lime);
+        color: var(--lime-soft);
       }
       h1,
       h2,
@@ -237,41 +284,52 @@
       h1,
       h2,
       h3 {
-        font-family: Manrope, 'Noto Sans Devanagari', sans-serif;
+        font-family: var(--font-heading);
+        font-weight: 250;
+        letter-spacing: -0.035em;
+        line-height: 1.0;
       }
       h1 {
         font-size: clamp(48px, 6.3vw, 94px);
-        line-height: 1.05;
-        letter-spacing: -0.055em;
-        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        font-weight: 250;
         margin: 25px 0;
       }
       h1 em {
         font-style: normal;
-        color: var(--lime);
+        color: var(--lime-soft);
+        font-weight: 300;
       }
       .hero-copy {
         font-size: 15px;
-        line-height: 1.75;
-        max-width: 410px;
-        color: #e0e8df;
+        line-height: 1.7;
+        max-width: 440px;
+        color: #cfcdc9;
+        font-weight: 300;
       }
       .pill {
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        gap: 32px;
-        border-radius: 50px;
+        gap: 28px;
+        border-radius: 4px;
         border: 1px solid currentColor;
-        padding: 15px 23px;
+        padding: 13px 20px;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
+        letter-spacing: -0.01em;
         background: transparent;
+        transition: all 0.25 ease;
       }
       .pill.light {
         background: var(--lime);
-        color: var(--deep);
+        color: #ffffff;
         border-color: var(--lime);
+      }
+      .pill.light:hover {
+        background: var(--navy);
+        border-color: var(--navy);
       }
       .hero .pill {
         margin-top: 28px;
@@ -284,7 +342,7 @@
         display: flex;
         align-items: end;
         justify-content: space-between;
-        border-top: 1px solid #ffffff40;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
         padding-top: 22px;
         gap: 20px;
       }
@@ -294,7 +352,7 @@
         gap: 20px;
       }
       .hero-stat strong {
-        font-family: Manrope, sans-serif;
+        font-family: 'Avenir Next', 'Helvetica Neue', sans-serif;
         font-size: 56px;
         letter-spacing: -3px;
         font-weight: 500;
@@ -385,14 +443,335 @@
         top: 175px;
         height: 540px;
         align-self: start;
-        background: var(--deep);
+        background:
+          radial-gradient(circle at 68% 35%, #34584b 0, transparent 34%),
+          linear-gradient(135deg, #0d2c25 0%, var(--deep) 62%, #0b241f 100%);
         color: var(--lime);
         overflow: hidden;
         border-radius: 3px;
         display: flex;
         align-items: center;
         justify-content: center;
+        isolation: isolate;
+        --chapter-progress: 0;
+        --path-offset: 1100px;
+        transition: background 700ms ease;
       }
+      .thermal-3d-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.88;
+        transition: opacity 0.5s ease;
+      }
+      .story-visual:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        opacity: 0.24;
+        background-image:
+          linear-gradient(#d7ec8612 1px, transparent 1px),
+          linear-gradient(90deg, #d7ec8612 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: linear-gradient(135deg, black, transparent 76%);
+      }
+      .stage-image,
+      .stage-map,
+      .stage-path {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .stage-image {
+        background-position: center;
+        background-size: cover;
+        mix-blend-mode: screen;
+        opacity: 0;
+        transform: scale(1.08);
+        transition:
+          opacity 900ms ease,
+          transform 1300ms ease;
+      }
+      .stage-image-a {
+        background-image:
+          linear-gradient(90deg, #123c32dd, #123c3244),
+          url('assets/plant-sl1.jpg');
+      }
+      .stage-image-b {
+        background-image:
+          linear-gradient(90deg, #123c32bb, #123c3244),
+          url('assets/plant-sl2.jpg');
+      }
+      .story-visual[data-theme='arrival'] .stage-image-a,
+      .story-visual[data-theme='today'] .stage-image-a,
+      .story-visual[data-theme='motion'] .stage-image-a {
+        opacity: 0.28;
+        transform: scale(1.02);
+      }
+      .story-visual[data-theme='expansion'] .stage-image-b,
+      .story-visual[data-theme='solar'] .stage-image-b,
+      .story-visual[data-theme='stewardship'] .stage-image-b {
+        opacity: 0.3;
+        transform: scale(1.02);
+      }
+      .story-visual[data-theme='archive'],
+      .story-visual[data-theme='continue'] {
+        background:
+          radial-gradient(circle at 22% 78%, #617448 0, transparent 28%),
+          linear-gradient(135deg, #1a4036 0%, #0c2923 68%);
+      }
+      .stage-map {
+        inset: auto 30px 76px auto;
+        width: 152px;
+        height: 255px;
+        color: #d7ec8680;
+        opacity: 0.72;
+        transform: rotate(7deg)
+          translateY(calc((1 - var(--chapter-progress)) * 18px));
+        transition:
+          transform 900ms ease,
+          opacity 600ms ease;
+      }
+      .stage-map span {
+        display: block;
+        font-size: 8px;
+        letter-spacing: 0.15em;
+        margin: 0 0 10px 15px;
+      }
+      .stage-map svg {
+        width: 100%;
+        height: 225px;
+        overflow: visible;
+        fill: #d7ec8610;
+        stroke: currentColor;
+        stroke-width: 1.2;
+      }
+      .stage-map circle:first-of-type {
+        fill: var(--lime);
+        stroke: var(--lime);
+      }
+      .stage-path {
+        z-index: 0;
+        opacity: 0.8;
+        transform: scale(1.08) rotate(-3deg);
+        transform-origin: center;
+        transition:
+          opacity 600ms ease,
+          transform 1000ms ease;
+      }
+      .stage-path svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .stage-path path {
+        fill: none;
+        stroke: var(--lime);
+        stroke-width: 1.4;
+        stroke-dasharray: 10 14;
+        stroke-dashoffset: var(--path-offset);
+        transition: stroke-dashoffset 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .stage-path .path-secondary {
+        stroke: #f5f4ed65;
+        stroke-width: 1;
+        stroke-dasharray: 3 18;
+        stroke-dashoffset: calc(var(--path-offset) * 0.72);
+      }
+      .stage-path circle {
+        fill: var(--lime);
+        opacity: 0.9;
+        filter: drop-shadow(0 0 9px #d7ec86);
+      }
+      .story-visual[data-theme='motion'] .stage-path {
+        opacity: 1;
+        transform: scale(1.14) rotate(-6deg);
+      }
+      .story-visual[data-theme='archive'] .stage-path,
+      .story-visual[data-theme='continue'] .stage-path {
+        opacity: 0.42;
+        transform: scale(1.02) rotate(2deg);
+      }
+      /* Jharkhand Glowing Map Styling */
+      .jharkhand-glowing-map {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .jh-map-svg {
+        width: 95%;
+        height: 95%;
+        overflow: visible;
+        filter: drop-shadow(0 0 18px rgba(75, 123, 236, 0.6));
+      }
+      .jh-state-boundary {
+        stroke-dasharray: 2000;
+        animation: jh-map-pulse 6s ease-in-out infinite alternate;
+      }
+      @keyframes jh-map-pulse {
+        0% { filter: drop-shadow(0 0 4px #4b7bec); stroke: #4b7bec; }
+        50% { filter: drop-shadow(0 0 18px #00d2d3); stroke: #00d2d3; }
+        100% { filter: drop-shadow(0 0 28px #4b7bec); stroke: #4b7bec; }
+      }
+
+      /* Unconstrained Thermal Plant Schematic Component (enpowertrading style) */
+      .schematic-section-full {
+        position: relative;
+        padding: 80px 0 0 0;
+        background: linear-gradient(180deg, #161c24 0%, #0d121c 40%, #090d14 100%);
+        overflow: visible;
+      }
+      .schematic-section-full .section-container {
+        padding: 0 7%;
+        margin-bottom: 30px;
+      }
+      .schematic-full-stage {
+        position: relative;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .schematic-sticky-bg {
+        position: sticky;
+        top: 60px;
+        width: 100%;
+        height: calc(100vh - 80px);
+        min-height: 580px;
+        background: transparent;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .schematic-diagram-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .schematic-badge {
+        position: absolute;
+        top: 24px;
+        left: 7%;
+        z-index: 20;
+        background: rgba(15, 23, 42, 0.94);
+        border: 1px solid rgba(75, 123, 236, 0.5);
+        backdrop-filter: blur(12px);
+        padding: 12px 18px;
+        border-radius: 6px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        pointer-events: auto;
+      }
+      .schematic-badge .badge-tag {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: #4b7bec;
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .schematic-badge .badge-title {
+        display: block;
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 4px;
+      }
+      .schematic-badge .badge-metrics {
+        display: flex;
+        gap: 16px;
+        font-size: 10px;
+        color: #f5cd79;
+        font-family: 'JetBrains Mono', monospace, sans-serif;
+      }
+      .schematic-svg-full {
+        width: 96%;
+        height: 92%;
+        max-width: 1350px;
+        overflow: visible;
+        filter: drop-shadow(0 0 25px rgba(13, 28, 45, 0.9));
+      }
+      .schematic-content-overlay {
+        position: relative;
+        z-index: 10;
+        padding: 0 7%;
+        max-width: 500px;
+        margin-left: auto;
+        margin-top: -80vh;
+        pointer-events: auto;
+      }
+      .schematic-step-card {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(75, 123, 236, 0.3);
+        border-left: 4px solid #4b7bec;
+        border-radius: 8px;
+        padding: 36px 32px;
+        margin-bottom: 25vh;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s ease;
+      }
+      .schematic-step-card.is-active {
+        border-left-color: #f5cd79;
+        box-shadow: 0 25px 60px rgba(75, 123, 236, 0.3);
+        background: rgba(15, 23, 42, 0.95);
+      }
+      .sch-node {
+        transition: all 0.4s ease;
+        opacity: 0.45;
+      }
+      .sch-node .sch-box {
+        transition: all 0.4s ease;
+      }
+      .schematic-sticky-bg[data-stage="0"] .sch-node-0,
+      .schematic-sticky-bg[data-stage="1"] .sch-node-1,
+      .schematic-sticky-bg[data-stage="2"] .sch-node-2,
+      .schematic-sticky-bg[data-stage="3"] .sch-node-3,
+      .schematic-sticky-bg[data-stage="4"] .sch-node-4,
+      .schematic-sticky-bg[data-stage="5"] .sch-node-5,
+      .schematic-sticky-bg[data-stage="6"] .sch-node-6,
+      .schematic-sticky-bg[data-stage="7"] .sch-node-7 {
+        opacity: 1;
+      }
+      .schematic-sticky-bg[data-stage="0"] .sch-node-0 .sch-box { stroke: #f5cd79; stroke-width: 3px; filter: drop-shadow(0 0 12px #f5cd79); }
+      .schematic-sticky-bg[data-stage="1"] .sch-node-1 .sch-box { stroke: #e74c3c; stroke-width: 3px; filter: drop-shadow(0 0 15px #e74c3c); }
+      .schematic-sticky-bg[data-stage="2"] .sch-node-2 .sch-box { stroke: #f1c40f; stroke-width: 3px; filter: drop-shadow(0 0 15px #f1c40f); }
+      .schematic-sticky-bg[data-stage="3"] .sch-node-3 .sch-box { stroke: #3498db; stroke-width: 3px; filter: drop-shadow(0 0 15px #3498db); }
+      .schematic-sticky-bg[data-stage="4"] .sch-node-4 .sch-box { stroke: #2ecc71; stroke-width: 3px; filter: drop-shadow(0 0 18px #2ecc71); }
+      .schematic-sticky-bg[data-stage="5"] .sch-node-5 .sch-box { stroke: #00d2d3; stroke-width: 3px; filter: drop-shadow(0 0 15px #00d2d3); }
+      .schematic-sticky-bg[data-stage="6"] .sch-node-6 .sch-box { stroke: #9b59b6; stroke-width: 3px; filter: drop-shadow(0 0 15px #9b59b6); }
+      .schematic-sticky-bg[data-stage="7"] .sch-node-7 .sch-box { stroke: #2ecc71; stroke-width: 3px; filter: drop-shadow(0 0 18px #2ecc71); }
+      @keyframes flame-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.15) translateY(-3px); opacity: 1; }
+      }
+      .flame-anim { animation: flame-pulse 1.2s infinite ease-in-out; }
+      @keyframes rotor-rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .rotor-spin { transform-origin: center; animation: rotor-rotate 2s infinite linear; }
       .orbit {
         position: absolute;
         width: 430px;
@@ -422,17 +801,30 @@
       .story-figure {
         text-align: center;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        width: min(82%, 400px);
+      }
+      .story-figure > span:first-child {
+        display: block;
+        color: var(--lime-soft);
+        font-size: 10px;
+        letter-spacing: 0.19em;
+        margin-bottom: 9px;
+        text-transform: uppercase;
+      }
+      .story-figure strong.is-changing {
+        animation: figure-switch 360ms ease both;
       }
       .story-figure strong {
-        font-family: Manrope, sans-serif;
+        font-family: var(--font-heading);
         font-size: 108px;
-        letter-spacing: -7px;
-        font-weight: 500;
+        letter-spacing: -0.05em;
+        font-weight: 250;
         display: block;
       }
       .story-figure span {
         font-size: 13px;
+        font-weight: 300;
       }
       .visual-caption {
         position: absolute;
@@ -443,76 +835,231 @@
         justify-content: space-between;
         font-size: 10px;
         letter-spacing: 0.1em;
+        z-index: 2;
+      }
+      .visual-caption span:last-child {
+        color: #f5f4edaa;
       }
       .story-step {
         min-height: 480px;
         padding: 65px 0 80px;
         border-top: 1px solid var(--line);
+        position: relative;
+      }
+      .story-step:before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 72px;
+        height: 2px;
+        background: var(--lime);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 600ms ease;
+      }
+      .story-step.is-active:before {
+        transform: scaleX(1);
       }
       .step-number {
         font-size: 11px;
-        color: var(--muted);
+        font-weight: 500;
+        color: var(--muted-light);
         margin-bottom: 30px;
         display: block;
+        letter-spacing: 0.08em;
       }
       .story-step h3 {
-        font-size: 34px;
-        letter-spacing: -1.2px;
-        line-height: 1.2;
-        font-weight: 500;
+        font-family: var(--font-heading);
+        font-size: 36px;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+        font-weight: 250;
         margin-bottom: 20px;
       }
       .story-step p {
         font-size: 15px;
-        line-height: 1.85;
+        line-height: 1.8;
         color: var(--muted);
         margin-bottom: 24px;
+        font-weight: 300;
       }
       .text-link {
         font-size: 12px;
+        font-weight: 500;
         border-bottom: 1px solid;
-        padding-bottom: 7px;
+        padding-bottom: 6px;
         display: inline-flex;
         gap: 25px;
+        color: var(--ink);
+        transition: color 0.2s ease, border-color 0.2s ease;
+      }
+      .text-link:hover {
+        color: var(--lime);
+        border-color: var(--lime);
       }
       .chapter-nav {
+        z-index: 10;
         display: flex;
-        gap: 6px;
+        gap: 8px;
         position: absolute;
-        top: 30px;
-        left: 30px;
-        right: 30px;
+        top: 24px;
+        left: 24px;
+        right: 24px;
       }
       .chapter-nav a {
-        height: 3px;
-        background: #ffffff35;
+        height: 4px;
+        border: none;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.22);
         flex: 1;
+        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        cursor: pointer;
+      }
+      .chapter-nav a:hover {
+        background: rgba(255, 255, 255, 0.45);
       }
       .chapter-nav a.active {
-        background: var(--lime);
+        height: 4px;
+        background: #4b7bec;
+        box-shadow: 0 0 10px rgba(75, 123, 236, 0.9), 0 0 3px #4b7bec;
+      }
+
+      /* Thermal Power Plant Process Map Styling */
+      .thermal-plant-map-container {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px 20px 15px;
+        overflow: hidden;
+      }
+      .thermal-plant-svg {
+        width: 100%;
+        height: 100%;
+        max-width: 700px;
+        max-height: 450px;
+        overflow: visible;
+      }
+      .plant-node {
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+        opacity: 0.35;
+      }
+      .plant-node .node-box {
+        fill: rgba(15, 23, 42, 0.85);
+        stroke: #334155;
+        stroke-width: 1.5;
+        transition: stroke 0.4s ease, fill 0.4s ease, filter 0.4s ease;
+      }
+      .plant-node .node-label {
+        fill: #64748b;
+        font-size: 8px;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.8px;
+        text-anchor: middle;
+        transition: fill 0.4s ease;
+      }
+      .flow-pipe {
+        transition: stroke 0.4s ease, stroke-width 0.4s ease, opacity 0.4s ease;
+        opacity: 0.35;
+      }
+      .steam-flow { animation: steam-flow 2s linear infinite; }
+      .electric-flow { animation: electric-pulse 1.8s linear infinite; }
+      .turbine-blade { transform-origin: center; animation: turbine-spin 3s linear infinite; }
+
+      /* Dynamic Scroll-by-Scroll Active Stage Highlighting */
+      .story-visual[data-chapter='0'] #node-stage-0,
+      .story-visual[data-chapter='1'] #node-stage-1,
+      .story-visual[data-chapter='2'] #node-stage-2,
+      .story-visual[data-chapter='3'] #node-stage-3,
+      .story-visual[data-chapter='4'] #node-stage-4,
+      .story-visual[data-chapter='5'] #node-stage-5,
+      .story-visual[data-chapter='6'] #node-stage-6,
+      .story-visual[data-chapter='7'] #node-stage-7 {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+
+      .story-visual[data-chapter='0'] #node-stage-0 .node-box { stroke: #38ada9; fill: rgba(56, 173, 169, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='0'] #node-stage-0 .node-label { fill: #38ada9; }
+
+      .story-visual[data-chapter='1'] #node-stage-1 .node-box { stroke: #ff9f43; fill: rgba(255, 159, 67, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='1'] #node-stage-1 .node-label { fill: #ff9f43; }
+
+      .story-visual[data-chapter='2'] #node-stage-2 .node-box { stroke: #4b7bec; fill: rgba(75, 123, 236, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='2'] #node-stage-2 .node-label { fill: #4b7bec; }
+
+      .story-visual[data-chapter='3'] #node-stage-3 .node-box { stroke: #60a5fa; fill: rgba(96, 165, 250, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='3'] #node-stage-3 .node-label { fill: #60a5fa; }
+
+      .story-visual[data-chapter='4'] #node-stage-4 .node-box { stroke: #f5cd79; fill: rgba(245, 205, 121, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='4'] #node-stage-4 .node-label { fill: #f5cd79; }
+
+      .story-visual[data-chapter='5'] #node-stage-5 .node-box { stroke: #00d2d3; fill: rgba(0, 210, 211, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='5'] #node-stage-5 .node-label { fill: #00d2d3; }
+
+      .story-visual[data-chapter='6'] #node-stage-6 .node-box { stroke: #e2e8f0; fill: rgba(226, 232, 240, 0.25); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='6'] #node-stage-6 .node-label { fill: #e2e8f0; }
+
+      .story-visual[data-chapter='7'] #node-stage-7 .node-box { stroke: #d7ec86; fill: rgba(215, 236, 134, 0.3); filter: url(#plant-node-glow); }
+      .story-visual[data-chapter='7'] #node-stage-7 .node-label { fill: #d7ec86; }
+
+      /* In Final Stage (7): COMPLETE PROCESS MAP ILLUMINATED TOGETHER! */
+      .story-visual[data-chapter='7'] .plant-node {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+      .story-visual[data-chapter='7'] .plant-node .node-box {
+        stroke: #4b7bec;
+        filter: url(#plant-node-glow);
+      }
+      .story-visual[data-chapter='7'] .plant-node .node-label {
+        fill: #ffffff;
+      }
+      .story-visual[data-chapter='7'] .flow-pipe {
+        opacity: 1;
+        stroke-width: 3;
+      }
+      @keyframes figure-switch {
+        0% {
+          opacity: 0.15;
+          transform: translateY(12px) scale(0.94);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
       .green-section {
-        background: var(--deep);
+        background: var(--navy);
         color: var(--paper);
       }
       .green-section .eyebrow,
       .green-section .section-heading p {
-        color: #c5d2c3;
+        color: #cfcdc9;
       }
       .access-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0;
-        border-top: 1px solid #ffffff35;
-        border-bottom: 1px solid #ffffff35;
+        border-top: 1px solid rgba(207, 205, 201, 0.25);
+        border-bottom: 1px solid rgba(207, 205, 201, 0.25);
       }
       .access-card {
-        padding: 30px;
-        border-right: 1px solid #ffffff35;
+        padding: 34px;
+        border-right: 1px solid rgba(207, 205, 201, 0.25);
         min-height: 250px;
         display: flex;
         flex-direction: column;
         align-items: start;
+        transition: background 0.25s ease;
+      }
+      .access-card:hover {
+        background: rgba(255, 255, 255, 0.03);
       }
       .access-card:first-child {
         padding-left: 0;
@@ -522,23 +1069,31 @@
       }
       .access-card .icon {
         font-size: 28px;
-        color: var(--lime);
+        color: var(--lime-soft);
         margin-bottom: 30px;
       }
       .access-card h3 {
-        font-size: 23px;
-        font-weight: 500;
-        letter-spacing: -0.5px;
+        font-family: var(--font-heading);
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: -0.03em;
         margin-bottom: 14px;
       }
       .access-card p {
         font-size: 13px;
         line-height: 1.7;
-        color: #c5d2c3;
+        color: #cfcdc9;
         max-width: 260px;
+        font-weight: 300;
       }
       .access-card .text-link {
         margin-top: 25px;
+        color: var(--lime-soft);
+        border-color: rgba(211, 231, 255, 0.4);
+      }
+      .access-card .text-link:hover {
+        color: #ffffff;
+        border-color: #ffffff;
       }
       .updates {
         display: grid;
@@ -554,19 +1109,24 @@
         font-size: 10px;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--muted);
+        color: var(--muted-light);
+        font-weight: 500;
       }
       .update-item h3 {
-        font-size: 20px;
-        line-height: 1.45;
-        font-weight: 500;
+        font-family: var(--font-heading);
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 300;
         margin: 12px 0;
+        letter-spacing: -0.025em;
       }
       .photo-card {
         height: 420px;
-        background: var(--deep);
+        background: var(--navy);
         position: relative;
         overflow: hidden;
+        border-radius: 4px;
+        border: 1px solid var(--line);
       }
       .photo-card img {
         width: 100%;
@@ -580,25 +1140,32 @@
         right: 0;
         padding: 70px 30px 30px;
         color: white;
-        background: linear-gradient(transparent, #123c32e8);
+        background: linear-gradient(transparent, rgba(22, 28, 36, 0.92));
       }
       .photo-card h3 {
+        font-family: var(--font-heading);
         font-size: 28px;
-        font-weight: 500;
+        font-weight: 300;
+        letter-spacing: -0.03em;
       }
       .view-banner {
-        background: var(--deep);
+        background: var(--navy);
         color: var(--paper);
         padding: 65px 7%;
+        border-bottom: 1px solid rgba(207, 205, 201, 0.2);
       }
       .view-banner h1 {
+        font-family: var(--font-heading);
         font-size: 54px;
+        font-weight: 250;
+        letter-spacing: -0.04em;
         margin: 18px 0;
       }
       .view-banner p {
         max-width: 650px;
         line-height: 1.8;
-        color: #c5d2c3;
+        color: #cfcdc9;
+        font-weight: 300;
       }
       .subnav {
         padding: 22px 7%;
@@ -606,13 +1173,18 @@
         gap: 12px 24px;
         flex-wrap: wrap;
         border-bottom: 1px solid var(--line);
+        background: var(--paper-duck);
       }
       .subnav a {
         font-size: 12px;
+        font-weight: 500;
         border-bottom: 1px solid transparent;
+        color: var(--muted);
+        transition: all 0.2s ease;
       }
       .subnav a:hover {
         border-color: var(--ink);
+        color: var(--ink);
       }
       .content-sections {
         padding: 15px 7% 80px;
@@ -623,17 +1195,161 @@
         scroll-margin-top: 170px;
       }
       .content-block h2 {
-        font-size: 30px;
-        letter-spacing: -0.8px;
-        font-weight: 500;
+        font-family: var(--font-heading);
+        font-size: 32px;
+        letter-spacing: -0.03em;
+        font-weight: 250;
         margin-bottom: 20px;
       }
       .content-block p {
         font-size: 15px;
-        line-height: 1.85;
+        line-height: 1.8;
         max-width: 850px;
         color: var(--muted);
         margin-bottom: 22px;
+        font-weight: 300;
+      }
+      .local-record {
+        display: inline-flex;
+        gap: 14px;
+        align-items: center;
+        border-left: 2px solid var(--lime);
+        padding: 9px 14px;
+        background: var(--paper-duck);
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      .local-record code {
+        color: var(--ink);
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        letter-spacing: 0;
+      }
+      .archive-panel {
+        margin-top: 38px;
+        padding: 34px;
+        border: 1px solid var(--line);
+        background: var(--paper-duck);
+        border-radius: 4px;
+      }
+      .archive-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        align-items: end;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 26px;
+        margin-bottom: 22px;
+      }
+      .archive-head .eyebrow {
+        margin-bottom: 12px;
+      }
+      .archive-head h3 {
+        font-family: var(--font-heading);
+        font-size: 32px;
+        font-weight: 250;
+        letter-spacing: -0.035em;
+      }
+      .archive-head > strong {
+        font-family: var(--font-heading);
+        font-size: 42px;
+        font-weight: 250;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+      }
+      .archive-head > strong small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-align: right;
+      }
+      .archive-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .archive-card {
+        min-height: 220px;
+        padding: 22px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .archive-card:hover {
+        border-color: var(--lime);
+      }
+      .archive-card:has(details[open]) {
+        grid-column: 1 / -1;
+      }
+      .record-body {
+        margin: 24px 0;
+        scroll-margin-top: 170px;
+      }
+      .record-body summary {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+      }
+      .record-text {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+        line-height: 1.8;
+        margin: 22px 0;
+        max-width: 900px;
+        color: var(--muted);
+        font-weight: 300;
+      }
+      .record-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .tender-record {
+        display: block;
+      }
+      .tender-record > summary {
+        cursor: pointer;
+      }
+      .archive-card small {
+        display: block;
+        min-height: 26px;
+        color: var(--muted-light);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        font-weight: 500;
+      }
+      .archive-card h4 {
+        margin: 20px 0 12px;
+        font-family: var(--font-heading);
+        font-size: 18px;
+        line-height: 1.3;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+      .archive-card p {
+        font-size: 13px;
+        line-height: 1.65;
+        margin: 0;
+        color: var(--muted);
+        font-weight: 300;
+      }
+      .archive-documents {
+        border-top: 1px solid var(--line);
+        margin-top: 28px;
+        padding-top: 25px;
+      }
+      .archive-documents > strong {
+        display: block;
+        margin-bottom: 16px;
+        font-family: var(--font-heading);
+        font-weight: 400;
+        font-size: 16px;
       }
       .document-row {
         padding: 20px;
@@ -643,14 +1359,20 @@
         align-items: center;
         justify-content: space-between;
         margin: 12px 0;
-        background: #fff7;
+        background: #ffffff;
+        border-radius: 4px;
+        transition: border-color 0.2s ease;
+      }
+      .document-row:hover {
+        border-color: var(--lime);
       }
       .document-row strong {
         font-weight: 500;
+        font-size: 14px;
       }
       .document-row small {
         display: block;
-        color: var(--muted);
+        color: var(--muted-light);
         font-size: 11px;
         margin-top: 7px;
       }
@@ -664,11 +1386,21 @@
       .filterbar select,
       .portal input,
       .portal select {
-        padding: 13px 16px;
+        padding: 12px 16px;
         border: 1px solid var(--line);
-        background: #fff;
+        background: #ffffff;
         color: var(--ink);
         border-radius: 4px;
+        font-family: var(--font-body);
+        font-size: 13px;
+        transition: border-color 0.2s ease;
+      }
+      .filterbar input:focus,
+      .filterbar select:focus,
+      .portal input:focus,
+      .portal select:focus {
+        border-color: var(--lime);
+        outline: none;
       }
       .filterbar input {
         flex: 1;
@@ -676,36 +1408,48 @@
       }
       .portal {
         max-width: 640px;
-        padding: 30px;
-        background: #e9ede2;
+        padding: 34px;
+        background: var(--paper-duck);
         border: 1px solid var(--line);
         border-radius: 4px;
       }
       .demo-label {
         display: inline-block;
         background: var(--lime);
-        padding: 6px 12px;
+        color: #ffffff;
+        padding: 5px 12px;
         font-size: 11px;
-        border-radius: 20px;
+        font-weight: 500;
+        border-radius: 4px;
         margin-bottom: 20px;
+        letter-spacing: 0.02em;
       }
       .portal label {
         display: block;
         font-size: 12px;
-        margin: 12px 0;
+        font-weight: 500;
+        margin: 12px 0 6px;
+        color: var(--ink);
       }
       .portal input,
       .portal select {
         display: block;
         width: 100%;
-        margin: 8px 0 20px;
+        margin: 0 0 20px;
       }
       .portal button {
-        background: var(--deep);
-        color: #fff;
+        background: var(--navy);
+        color: #ffffff;
         border: 0;
-        padding: 14px 20px;
-        border-radius: 30px;
+        padding: 13px 24px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 13px;
+        transition: background 0.2s ease;
+      }
+      .portal button:hover {
+        background: var(--lime);
+      }
       }
       .portal-output {
         margin-top: 20px;
@@ -730,9 +1474,10 @@
         margin: 8px 0;
       }
       footer {
-        background: #0c2c25;
-        color: #c5d2c3;
-        padding: 55px 7% 25px;
+        background: var(--navy);
+        color: #cfcdc9;
+        padding: 65px 7% 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
       .footer-top {
         display: flex;
@@ -741,42 +1486,50 @@
         padding-bottom: 40px;
       }
       .footer-top h2 {
+        font-family: var(--font-heading);
         color: var(--paper);
-        font-size: 23px;
-        line-height: 1.4;
-        max-width: 300px;
-        font-weight: 500;
+        font-size: 24px;
+        line-height: 1.35;
+        max-width: 320px;
+        font-weight: 300;
+        letter-spacing: -0.03em;
       }
       .footer-top p {
-        font-size: 12px;
+        font-size: 13px;
         line-height: 1.8;
         max-width: 310px;
+        color: #cfcdc9;
+        font-weight: 300;
       }
       .footer-bottom {
         display: flex;
         justify-content: space-between;
         gap: 20px;
         flex-wrap: wrap;
-        border-top: 1px solid #ffffff25;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-top: 25px;
-        font-size: 10px;
+        font-size: 11px;
+        color: #7d7d7d;
       }
       .footer-bottom nav {
         display: flex;
         gap: 22px;
       }
+      .footer-bottom a:hover {
+        color: var(--lime-soft);
+      }
       .search-dialog {
         width: min(700px, 92vw);
         max-height: 80vh;
-        border: 0;
-        padding: 30px;
+        border: 1px solid var(--line);
+        padding: 34px;
         background: var(--paper);
         color: var(--ink);
-        border-radius: 6px;
+        border-radius: 4px;
       }
       .search-dialog::backdrop {
-        background: #0c2c25aa;
-        backdrop-filter: blur(5px);
+        background: rgba(22, 28, 36, 0.75);
+        backdrop-filter: blur(8px);
       }
       .search-top {
         display: flex;
@@ -784,16 +1537,30 @@
         align-items: center;
         margin-bottom: 24px;
       }
+      .search-top h3 {
+        font-family: var(--font-heading);
+        font-size: 24px;
+        font-weight: 300;
+      }
       .search-top button {
         border: 0;
         background: none;
         font-size: 25px;
+        color: var(--muted);
+        cursor: pointer;
       }
       .search-dialog input {
         width: 100%;
-        padding: 15px;
+        padding: 14px 18px;
         border: 1px solid var(--line);
-        background: #fff;
+        background: #ffffff;
+        border-radius: 4px;
+        font-family: var(--font-body);
+        font-size: 14px;
+      }
+      .search-dialog input:focus {
+        border-color: var(--lime);
+        outline: none;
       }
       .search-results a {
         display: block;
@@ -802,7 +1569,7 @@
       }
       .search-results small {
         display: block;
-        color: var(--muted);
+        color: var(--muted-light);
         margin-top: 5px;
       }
       .page-progress {
@@ -811,7 +1578,7 @@
         left: 0;
         height: 3px;
         width: calc(var(--progress) * 100%);
-        background: #c7d879;
+        background: var(--lime);
         z-index: 50;
       }
       [hidden] {
@@ -820,6 +1587,114 @@
       .empty {
         padding: 25px;
         color: var(--muted);
+      }
+      .brand img {
+        width: 100px;
+        height: 54px;
+        object-fit: cover;
+        object-position: left center;
+      }
+      .story-visual::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: calc(var(--story-progress, 0) * 100%);
+        background: currentColor;
+      }
+      .stage-image {
+        translate: 0 calc(var(--scene-progress, 0) * -24px);
+        scale: calc(1.06 + var(--scene-progress, 0) * 0.06);
+      }
+      .story-visual[data-theme='solar'] {
+        color: #173f32;
+        background: #d7ec86;
+      }
+      .story-visual[data-theme='solar'] .stage-image-b {
+        opacity: 0.1;
+        clip-path: polygon(0 50%, 100% 15%, 100% 100%, 0 100%);
+      }
+      .story-visual[data-theme='solar']::before {
+        z-index: 0;
+        opacity: 0.45;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            transparent 0 39px,
+            #123c3255 40px 41px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0 39px,
+            #123c3255 40px 41px
+          );
+        transform: perspective(420px) rotateX(55deg) scale(1.4);
+        mask-image: linear-gradient(transparent 20%, black);
+      }
+      .story-visual[data-theme='solar'] .orbit {
+        background: #fff6;
+        border-color: #123c3255;
+        width: 160px;
+        height: 160px;
+        translate: 90px -80px;
+      }
+      .story-visual[data-theme='solar'] .story-figure > span:first-child,
+      .story-visual[data-theme='solar'] .visual-caption span:last-child {
+        color: #173f32;
+      }
+      .story-visual[data-theme='motion'] .story-figure {
+        transform: translateY(-60px);
+      }
+      .story-visual[data-theme='motion'] .stage-map {
+        width: 230px;
+        height: 300px;
+        opacity: 1;
+        right: 10%;
+      }
+      .story-visual[data-theme='expansion'] .orbit {
+        border-radius: 0;
+        transform: rotate(45deg) scale(1.25);
+      }
+      .story-visual[data-theme='stewardship'] {
+        background: #204c40;
+      }
+      .story-visual[data-theme='archive'] {
+        background: #e4e9de;
+        color: #123c32;
+      }
+      .story-visual[data-theme='archive'] .story-figure > span:first-child,
+      .story-visual[data-theme='archive'] .visual-caption span:last-child {
+        color: #123c32;
+      }
+      .story-visual[data-theme='continue'] .orbit {
+        transform: scale(1.8);
+      }
+      .orbit,
+      .story-figure {
+        transition:
+          transform 0.8s ease,
+          border-radius 0.8s ease,
+          width 0.8s ease,
+          height 0.8s ease;
+      }
+      @media (max-width: 900px) {
+        .brand img {
+          width: 80px;
+          height: 43px;
+        }
+        .archive-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .brand img {
+          width: 64px;
+          height: 35px;
+        }
+        .story-visual[data-theme='motion'] .story-figure {
+          transform: translateY(-10px);
+        }
       }
       @media (min-width: 1600px) {
         .hero-content {
@@ -993,6 +1868,16 @@
           height: 265px;
           z-index: 2;
         }
+        .stage-map {
+          right: 12px;
+          bottom: 38px;
+          opacity: 0.35;
+          transform: scale(0.62) rotate(7deg);
+          transform-origin: bottom right;
+        }
+        .stage-path {
+          transform: scale(1.25) rotate(-3deg);
+        }
         .story-figure strong {
           font-size: 78px;
         }
@@ -1014,6 +1899,25 @@
         .story-step {
           min-height: 390px;
           padding: 50px 0;
+        }
+        .archive-panel {
+          padding: 20px;
+        }
+        .archive-head {
+          display: block;
+        }
+        .archive-head > strong {
+          display: block;
+          margin-top: 20px;
+        }
+        .archive-head > strong small {
+          text-align: left;
+        }
+        .archive-grid {
+          grid-template-columns: 1fr;
+        }
+        .archive-card {
+          min-height: 0;
         }
         .access-grid {
           grid-template-columns: 1fr;
@@ -1067,6 +1971,24 @@
         }
       }
       @media (prefers-reduced-motion: reduce) {
+        .stage-image {
+          translate: none;
+          scale: 1;
+        }
+        .story-visual {
+          position: relative;
+          top: 0;
+        }
+        .story-step {
+          min-height: 0;
+        }
+        .story {
+          display: block;
+        }
+        .story-visual .orbit,
+        .story-visual .story-figure {
+          transform: none !important;
+        }
         html {
           scroll-behavior: auto;
         }
@@ -1112,7 +2034,7 @@
     <header class="masthead">
       <div class="identity">
         <a class="brand" href="#home"
-          ><img src="https://tvnl.in/img/lg.png" alt="TVNL" />
+          ><img src="assets/tvnl-logo.png" alt="TVNL" />
           <div>
             <div
               class="brand-name"
@@ -1225,6 +2147,7 @@
             >Tender notices, extensions and procurement information</a
           ><a href="#tenders" class="arrow" aria-label="View tenders">↗</a>
         </div>
+
         <section class="section" id="energy-story">
           <div
             class="eyebrow"
@@ -1249,20 +2172,463 @@
             </p>
           </div>
           <div class="story">
-            <div class="story-visual">
+            <div class="story-visual" data-theme="arrival">
+              <div
+                class="jharkhand-glowing-map"
+                id="jharkhand-glowing-map"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 600 500"
+                  preserveAspectRatio="xMidYMid meet"
+                  class="jh-map-svg"
+                >
+                  <defs>
+                    <filter
+                      id="jh-map-glow"
+                      x="-20%"
+                      y="-20%"
+                      width="140%"
+                      height="140%"
+                    >
+                      <feGaussianBlur stdDeviation="6" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <filter
+                      id="jh-beacon-glow"
+                      x="-60%"
+                      y="-60%"
+                      width="220%"
+                      height="220%"
+                    >
+                      <feGaussianBlur stdDeviation="10" result="blur1" />
+                      <feGaussianBlur stdDeviation="20" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+
+                    <radialGradient
+                      id="jh-state-fill-grad"
+                      cx="50%"
+                      cy="50%"
+                      r="50%"
+                    >
+                      <stop offset="0%" stop-color="rgba(75, 123, 236, 0.22)" />
+                      <stop offset="70%" stop-color="rgba(34, 47, 62, 0.3)" />
+                      <stop offset="100%" stop-color="rgba(15, 23, 42, 0.45)" />
+                    </radialGradient>
+
+                    <linearGradient
+                      id="jh-ray-grad"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        stop-color="#4b7bec"
+                        stop-opacity="0.95"
+                      />
+                      <stop
+                        offset="50%"
+                        stop-color="#38ada9"
+                        stop-opacity="0.7"
+                      />
+                      <stop
+                        offset="100%"
+                        stop-color="#d7ec86"
+                        stop-opacity="0.3"
+                      />
+                    </linearGradient>
+
+                    <style>
+                      @keyframes jh-pulse-ring-anim {
+                        0% {
+                          r: 6px;
+                          opacity: 0.95;
+                          stroke-width: 2.2px;
+                        }
+                        50% {
+                          opacity: 0.55;
+                        }
+                        100% {
+                          r: 42px;
+                          opacity: 0;
+                          stroke-width: 0.5px;
+                        }
+                      }
+                      @keyframes jh-ray-flow-anim {
+                        0% {
+                          stroke-dashoffset: 70;
+                        }
+                        100% {
+                          stroke-dashoffset: 0;
+                        }
+                      }
+                    </style>
+                  </defs>
+
+                  <!-- Background Grid Mesh -->
+                  <g class="jh-geo-grid" opacity="0.22">
+                    <line
+                      x1="40"
+                      y1="100"
+                      x2="560"
+                      y2="100"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                    <line
+                      x1="40"
+                      y1="200"
+                      x2="560"
+                      y2="200"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                    <line
+                      x1="40"
+                      y1="300"
+                      x2="560"
+                      y2="300"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                    <line
+                      x1="40"
+                      y1="400"
+                      x2="560"
+                      y2="400"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+
+                    <line
+                      x1="150"
+                      y1="40"
+                      x2="150"
+                      y2="460"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                    <line
+                      x1="300"
+                      y1="40"
+                      x2="300"
+                      y2="460"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                    <line
+                      x1="450"
+                      y1="40"
+                      x2="450"
+                      y2="460"
+                      stroke="#4b7bec"
+                      stroke-width="0.5"
+                      stroke-dasharray="3 6"
+                    />
+                  </g>
+
+                  <!-- Damodar River -->
+                  <path
+                    class="jh-river-path"
+                    d="M 106 253 Q 200 230 310.4 140.5 T 440 180 T 557 121"
+                    fill="none"
+                    stroke="#00d2d3"
+                    stroke-width="1.8"
+                    stroke-dasharray="4 4"
+                    opacity="0.6"
+                  />
+                  <text
+                    x="160"
+                    y="224"
+                    class="jh-river-text"
+                    fill="#00d2d3"
+                    font-size="8"
+                    font-family="Inter, sans-serif"
+                    letter-spacing="1.2px"
+                    opacity="0.6"
+                  >
+                    DAMODAR RIVER
+                  </text>
+
+                  <!-- Main Jharkhand State Boundary Path -->
+                  <path
+                    class="jh-state-boundary"
+                    d="M544.6 80.7 L543.0 93.8 L553.3 100.4 L564.7 111.6 L565.0 117.5 L557.3 121.4 L550.6 132.9 L557.7 134.6 L559.0 141.1 L556.0 152.0 L545.6 152.0 L545.6 171.3 L539.0 181.5 L532.6 186.1 L533.3 196.6 L520.9 195.3 L519.9 203.2 L511.3 200.2 L511.9 210.4 L504.9 215.0 L492.6 209.4 L481.2 210.1 L487.9 217.7 L488.2 224.5 L480.2 228.2 L470.2 227.2 L471.5 235.1 L461.2 232.8 L442.8 225.9 L433.8 237.0 L430.8 246.6 L421.8 245.6 L400.8 252.8 L391.4 252.8 L381.4 262.3 L380.8 270.9 L366.1 273.8 L358.1 266.6 L356.4 259.4 L344.7 257.7 L345.4 267.9 L333.4 271.8 L324.4 272.2 L324.7 288.3 L320.7 292.5 L321.7 300.1 L330.7 307.0 L344.7 305.3 L353.7 310.9 L364.7 321.8 L372.4 319.8 L385.4 323.7 L389.8 330.0 L388.1 345.1 L395.1 351.0 L403.1 352.3 L413.1 358.2 L414.8 366.7 L426.8 367.1 L430.5 377.9 L427.8 383.5 L436.8 386.1 L434.2 400.9 L430.8 405.5 L422.8 405.8 L422.8 405.8 L414.5 403.5 L397.5 392.4 L388.8 396.0 L380.8 391.7 L373.4 383.2 L363.4 378.2 L352.1 375.9 L348.4 370.4 L337.0 375.0 L335.0 379.9 L343.1 387.8 L342.4 396.3 L337.0 402.9 L343.4 409.1 L334.0 427.2 L328.4 431.4 L315.7 431.4 L315.4 425.2 L293.7 420.9 L273.0 412.4 L267.6 412.4 L250.3 424.5 L237.6 418.6 L228.9 417.0 L229.2 412.4 L238.3 397.6 L232.2 377.3 L212.6 384.1 L203.5 381.2 L196.9 384.5 L184.2 382.8 L169.5 384.1 L160.8 391.0 L145.1 392.7 L134.1 389.1 L127.4 383.8 L127.8 378.6 L112.4 373.0 L112.4 373.0 L112.8 367.7 L121.1 360.5 L129.1 360.5 L138.5 354.9 L137.8 349.7 L144.8 346.7 L148.8 337.5 L155.2 334.9 L154.5 323.7 L143.8 325.4 L136.8 323.7 L115.4 304.3 L120.1 285.3 L108.4 280.7 L108.8 272.8 L113.1 267.2 L114.4 256.1 L106.1 253.4 L105.1 253.8 L104.8 260.3 L86.4 256.4 L79.4 247.2 L81.1 239.7 L72.7 229.8 L64.4 227.8 L56.4 216.7 L56.0 210.1 L46.3 203.9 L35.0 202.2 L35.0 202.2 L37.7 199.3 L43.7 184.2 L40.7 179.2 L47.7 175.3 L47.0 169.4 L41.3 163.8 L42.7 158.9 L54.7 155.9 L54.7 155.9 L83.4 157.9 L87.1 156.2 L96.1 154.9 L97.1 155.3 L104.1 153.6 L111.4 144.1 L117.4 146.7 L124.8 160.8 L131.8 154.3 L141.8 154.9 L148.8 159.9 L145.5 164.1 L150.5 170.0 L164.2 176.3 L168.5 181.9 L177.5 168.4 L187.2 170.4 L189.5 163.5 L205.9 156.2 L215.2 172.7 L222.9 172.3 L229.9 166.8 L239.6 168.7 L245.6 166.4 L258.3 156.6 L283.0 153.3 L287.3 155.3 L296.0 149.7 L302.3 150.0 L301.7 139.8 L307.0 133.9 L310.7 123.7 L315.0 126.4 L326.7 126.4 L335.0 133.6 L346.1 128.7 L352.7 133.3 L355.1 146.7 L359.4 149.7 L374.1 149.3 L376.1 157.9 L388.1 171.7 L393.5 172.0 L396.5 160.5 L409.1 148.0 L416.8 152.3 L430.8 146.1 L438.2 153.3 L447.5 144.7 L459.9 145.4 L464.2 134.2 L463.5 125.4 L471.5 119.5 L472.2 105.7 L474.9 97.8 L487.9 94.8 L491.6 80.4 L508.9 78.4 L519.6 68.6 L533.0 70.9 L535.6 76.8 L544.6 80.7 Z"
+                    fill="url(#jh-state-fill-grad)"
+                    stroke="#4b7bec"
+                    stroke-width="2.5"
+                    filter="url(#jh-map-glow)"
+                  />
+
+                  <!-- Grid Transmission Rays -->
+                  <g class="jh-transmission-grid">
+                    <line
+                      x1="310.4"
+                      y1="140.5"
+                      x2="268.1"
+                      y2="182.7"
+                      stroke="url(#jh-ray-grad)"
+                      stroke-width="2"
+                      stroke-dasharray="6 4"
+                      class="jh-grid-line"
+                    />
+                    <line
+                      x1="310.4"
+                      y1="140.5"
+                      x2="390"
+                      y2="160"
+                      stroke="url(#jh-ray-grad)"
+                      stroke-width="2"
+                      stroke-dasharray="6 4"
+                      class="jh-grid-line"
+                    />
+                    <line
+                      x1="310.4"
+                      y1="140.5"
+                      x2="425"
+                      y2="367"
+                      stroke="url(#jh-ray-grad)"
+                      stroke-width="1.8"
+                      stroke-dasharray="6 4"
+                      class="jh-grid-line"
+                    />
+                    <line
+                      x1="310.4"
+                      y1="140.5"
+                      x2="290"
+                      y2="115"
+                      stroke="#f5cd79"
+                      stroke-width="1.8"
+                      stroke-dasharray="4 3"
+                      class="jh-grid-line"
+                    />
+                    <line
+                      x1="310.4"
+                      y1="140.5"
+                      x2="355"
+                      y2="185"
+                      stroke="#2ecc71"
+                      stroke-width="1.8"
+                      stroke-dasharray="4 3"
+                      class="jh-grid-line"
+                    />
+                  </g>
+
+                  <!-- Key Regional Nodes -->
+                  <g class="jh-node jh-node-ranchi">
+                    <circle cx="268.1" cy="182.7" r="4" fill="#4b7bec" />
+                    <circle
+                      cx="268.1"
+                      cy="182.7"
+                      r="8"
+                      fill="none"
+                      stroke="#4b7bec"
+                      stroke-width="1"
+                      opacity="0.6"
+                    />
+                    <text
+                      x="250"
+                      y="200"
+                      fill="#ffffff"
+                      font-size="9"
+                      font-weight="600"
+                      font-family="Inter, sans-serif"
+                      letter-spacing="0.5px"
+                    >
+                      RANCHI
+                    </text>
+                  </g>
+
+                  <g class="jh-node jh-node-dhanbad">
+                    <circle cx="390" cy="160" r="3.5" fill="#38ada9" />
+                    <text
+                      x="400"
+                      y="163"
+                      fill="#cfcdc9"
+                      font-size="8"
+                      font-family="Inter, sans-serif"
+                    >
+                      BOKARO / DHANBAD
+                    </text>
+                  </g>
+
+                  <g class="jh-node jh-node-jamshedpur">
+                    <circle cx="425" cy="367" r="3.5" fill="#38ada9" />
+                    <text
+                      x="435"
+                      y="371"
+                      fill="#cfcdc9"
+                      font-size="8"
+                      font-family="Inter, sans-serif"
+                    >
+                      JAMSHEDPUR
+                    </text>
+                  </g>
+
+                  <g class="jh-node jh-node-expansion">
+                    <circle cx="290" cy="115" r="4.5" fill="#f5cd79" />
+                    <text
+                      x="205"
+                      y="108"
+                      fill="#f5cd79"
+                      font-size="8"
+                      font-weight="600"
+                      font-family="Inter, sans-serif"
+                    >
+                      RAJBAR E&D (1,740 MW)
+                    </text>
+                  </g>
+
+                  <g class="jh-node jh-node-solar">
+                    <circle cx="355" cy="185" r="4.5" fill="#2ecc71" />
+                    <text
+                      x="367"
+                      y="195"
+                      fill="#2ecc71"
+                      font-size="8"
+                      font-weight="600"
+                      font-family="Inter, sans-serif"
+                    >
+                      50 MW SOLAR PARK
+                    </text>
+                  </g>
+
+                  <!-- PRIMARY BEACON: TENUGHAT THERMAL POWER STATION -->
+                  <g
+                    class="jh-plant-beacon"
+                    transform="translate(310.4, 140.5)"
+                  >
+                    <circle
+                      r="12"
+                      fill="none"
+                      stroke="#4b7bec"
+                      stroke-width="1.5"
+                      class="jh-ring jh-ring-1"
+                    />
+                    <circle
+                      r="22"
+                      fill="none"
+                      stroke="#38ada9"
+                      stroke-width="1"
+                      class="jh-ring jh-ring-2"
+                    />
+                    <circle
+                      r="34"
+                      fill="none"
+                      stroke="#d7ec86"
+                      stroke-width="0.75"
+                      opacity="0.5"
+                      class="jh-ring jh-ring-3"
+                    />
+
+                    <circle
+                      r="6"
+                      fill="#4b7bec"
+                      filter="url(#jh-beacon-glow)"
+                    />
+                    <circle r="2.5" fill="#ffffff" />
+
+                    <g transform="translate(14, -14)">
+                      <rect
+                        x="0"
+                        y="-12"
+                        width="165"
+                        height="22"
+                        rx="4"
+                        fill="rgba(15, 23, 42, 0.88)"
+                        stroke="#4b7bec"
+                        stroke-width="1"
+                      />
+                      <text
+                        x="8"
+                        y="3"
+                        fill="#ffffff"
+                        font-size="9"
+                        font-weight="700"
+                        font-family="Inter, sans-serif"
+                        letter-spacing="0.5px"
+                      >
+                        TENUGHAT TPS · 420 MW
+                      </text>
+                    </g>
+                  </g>
+
+                  <!-- Map Title & Scale Overlay -->
+                  <g transform="translate(45, 450)" opacity="0.85">
+                    <text
+                      x="0"
+                      y="0"
+                      fill="#4b7bec"
+                      font-size="10"
+                      font-weight="700"
+                      font-family="Geist, sans-serif"
+                      letter-spacing="1.5px"
+                    >
+                      STATE POWER GRID / JHARKHAND
+                    </text>
+                    <text
+                      x="0"
+                      y="14"
+                      fill="#8899a6"
+                      font-size="8"
+                      font-family="Inter, sans-serif"
+                      letter-spacing="0.5px"
+                    >
+                      TENUGHAT THERMAL POWER STATION · LALPANIA
+                    </text>
+                  </g>
+                </svg>
+              </div>
+
               <nav class="chapter-nav" aria-label="Energy story chapters">
                 <a
-                  href="#home/story-today"
+                  href="#home/story-arrival"
                   class="active"
-                  aria-label="Today"
+                  aria-label="Arrival"
                 ></a
+                ><a href="#home/story-today" aria-label="Today"></a
+                ><a href="#home/story-motion" aria-label="Motion"></a
                 ><a href="#home/story-expansion" aria-label="Expansion"></a
-                ><a href="#home/story-solar" aria-label="Solar"></a>
+                ><a href="#home/story-solar" aria-label="Solar"></a
+                ><a href="#home/story-stewardship" aria-label="Stewardship"></a
+                ><a href="#home/story-archive" aria-label="Public archive"></a
+                ><a href="#home/story-continue" aria-label="Continue"></a>
               </nav>
+              <div class="stage-path" aria-hidden="true">
+                <svg viewBox="0 0 900 540" role="presentation">
+                  <path
+                    class="path-main"
+                    d="M-40 410C110 330 162 100 337 174s158 276 322 204S820 124 940 84"
+                  />
+                  <path
+                    class="path-secondary"
+                    d="M-30 456C147 386 199 176 354 234s174 199 309 138S818 189 932 152"
+                  />
+                  <circle cx="337" cy="174" r="7" />
+                  <circle cx="659" cy="378" r="7" />
+                </svg>
+              </div>
               <div class="orbit"></div>
               <div class="energy-line"></div>
               <div class="story-figure">
-                <strong id="story-number">420</strong
+                <span id="story-prefix">PUBLIC ENERGY /</span
+                ><strong id="story-number">420</strong
                 ><span
                   id="story-unit"
                   data-en="MW · INSTALLED CAPACITY"
@@ -1271,22 +2637,70 @@
                 >
               </div>
               <div class="visual-caption">
-                <span>TVNL / JHARKHAND</span
-                ><span id="story-index">01 — 03</span>
+                <span id="story-location">LALPANIA · BOKARO</span
+                ><span id="story-index">01 — 08</span>
               </div>
             </div>
             <div>
               <article
                 class="story-step"
-                id="story-today"
+                id="story-arrival"
                 data-figure="420"
+                data-unit-en="MW · THE FOUNDATION"
+                data-unit-hi="मेगावाट · मजबूत नींव"
+                data-kicker-en="01 — ARRIVAL / PLACE MATTERS"
+                data-kicker-hi="01 — शुरुआत / स्थान महत्वपूर्ण है"
+                data-location-en="LALPANIA · BOKARO"
+                data-location-hi="ललपनिया · बोकारो"
+                data-theme="arrival"
                 data-chapter="0"
               >
                 <span
                   class="step-number"
-                  data-en="01 — THE POWER OF TODAY"
-                  data-hi="01 — आज की ऊर्जा"
-                  >01 — THE POWER OF TODAY</span
+                  data-en="01 — ARRIVAL / PLACE MATTERS"
+                  data-hi="01 — शुरुआत / स्थान महत्वपूर्ण है"
+                  >01 — ARRIVAL / PLACE MATTERS</span
+                >
+                <h3
+                  data-en="Every system starts\nwith a place."
+                  data-hi="हर व्यवस्था की शुरुआत\nएक स्थान से होती है।"
+                >
+                  Every system starts<br />with a place.
+                </h3>
+                <p
+                  data-en="At Lalpania in Bokaro, Tenughat Thermal Power Station anchors TVNL’s public energy story. The landscape is not a backdrop; it is where people, infrastructure and purpose meet."
+                  data-hi="बोकारो के ललपनिया में तेनुघाट ताप विद्युत केंद्र टीवीएनएल की जन ऊर्जा यात्रा का आधार है। यह परिदृश्य केवल पृष्ठभूमि नहीं; यहीं लोग, बुनियादी ढाँचा और उद्देश्य मिलते हैं।"
+                >
+                  At Lalpania in Bokaro, Tenughat Thermal Power Station anchors
+                  TVNL’s public energy story. The landscape is not a backdrop;
+                  it is where people, infrastructure and purpose meet.
+                </p>
+                <a
+                  class="text-link"
+                  href="#company"
+                  data-en="Meet the company ↗"
+                  data-hi="कंपनी से परिचित हों ↗"
+                  >Meet the company ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-today"
+                data-figure="420"
+                data-unit-en="MW · INSTALLED CAPACITY"
+                data-unit-hi="मेगावाट · स्थापित क्षमता"
+                data-kicker-en="02 — THE POWER OF TODAY"
+                data-kicker-hi="02 — आज की ऊर्जा"
+                data-location-en="TWO UNITS · ONE PURPOSE"
+                data-location-hi="दो इकाइयाँ · एक उद्देश्य"
+                data-theme="today"
+                data-chapter="1"
+              >
+                <span
+                  class="step-number"
+                  data-en="02 — THE POWER OF TODAY"
+                  data-hi="02 — आज की ऊर्जा"
+                  >02 — THE POWER OF TODAY</span
                 >
                 <h3
                   data-en="Built here.\nFor the people here."
@@ -1312,15 +2726,63 @@
               </article>
               <article
                 class="story-step"
-                id="story-expansion"
-                data-figure="1,740"
-                data-chapter="1"
+                id="story-motion"
+                data-figure="2 × 210"
+                data-unit-en="MW · GENERATING UNITS"
+                data-unit-hi="मेगावाट · उत्पादन इकाइयाँ"
+                data-kicker-en="03 — ENERGY IN MOTION"
+                data-kicker-hi="03 — गतिमान ऊर्जा"
+                data-location-en="GENERATION / TRANSMISSION / STATE"
+                data-location-hi="उत्पादन / पारेषण / राज्य"
+                data-theme="motion"
+                data-chapter="2"
               >
                 <span
                   class="step-number"
-                  data-en="02 — THE NEXT CHAPTER"
-                  data-hi="02 — अगला अध्याय"
-                  >02 — THE NEXT CHAPTER</span
+                  data-en="03 — ENERGY IN MOTION"
+                  data-hi="03 — गतिमान ऊर्जा"
+                  >03 — ENERGY IN MOTION</span
+                >
+                <h3
+                  data-en="Power is a\nconnected journey."
+                  data-hi="ऊर्जा एक\nजुड़ी हुई यात्रा है।"
+                >
+                  Power is a<br />connected journey.
+                </h3>
+                <p
+                  data-en="Generation is one point in a larger public system. From units at the station to the networks they support, every handoff carries the same promise: dependable energy for Jharkhand."
+                  data-hi="उत्पादन एक बड़ी सार्वजनिक व्यवस्था का एक हिस्सा है। केंद्र की इकाइयों से लेकर समर्थित नेटवर्क तक, हर चरण का एक ही वादा है: झारखंड के लिए भरोसेमंद ऊर्जा।"
+                >
+                  Generation is one point in a larger public system. From units
+                  at the station to the networks they support, every handoff
+                  carries the same promise: dependable energy for Jharkhand.
+                </p>
+                <a
+                  class="text-link"
+                  href="#generation"
+                  data-en="Follow the generation system ↗"
+                  data-hi="उत्पादन व्यवस्था देखें ↗"
+                  >Follow the generation system ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-expansion"
+                data-figure="1,740"
+                data-unit-en="MW · PLANNED TOTAL THERMAL CAPACITY"
+                data-unit-hi="मेगावाट · प्रस्तावित कुल ताप क्षमता"
+                data-kicker-en="04 — THE NEXT CHAPTER"
+                data-kicker-hi="04 — अगला अध्याय"
+                data-location-en="RAJBAR E&D · EXPANSION VISION"
+                data-location-hi="राजबार ई एंड डी · विस्तार की परिकल्पना"
+                data-theme="expansion"
+                data-chapter="3"
+              >
+                <span
+                  class="step-number"
+                  data-en="04 — THE NEXT CHAPTER"
+                  data-hi="04 — अगला अध्याय"
+                  >04 — THE NEXT CHAPTER</span
                 >
                 <h3
                   data-en="Thinking bigger.\nBuilding for tomorrow."
@@ -1348,13 +2810,20 @@
                 class="story-step"
                 id="story-solar"
                 data-figure="50"
-                data-chapter="2"
+                data-unit-en="MW · PLANNED SOLAR PROJECT"
+                data-unit-hi="मेगावाट · प्रस्तावित सौर परियोजना"
+                data-kicker-en="05 — A BROADER ENERGY FUTURE"
+                data-kicker-hi="05 — व्यापक ऊर्जा भविष्य"
+                data-location-en="SOLAR / NEW DIMENSION"
+                data-location-hi="सौर · नया आयाम"
+                data-theme="solar"
+                data-chapter="4"
               >
                 <span
                   class="step-number"
-                  data-en="03 — A BROADER ENERGY FUTURE"
-                  data-hi="03 — व्यापक ऊर्जा भविष्य"
-                  >03 — A BROADER ENERGY FUTURE</span
+                  data-en="05 — A BROADER ENERGY FUTURE"
+                  data-hi="05 — व्यापक ऊर्जा भविष्य"
+                  >05 — A BROADER ENERGY FUTURE</span
                 >
                 <h3
                   data-en="New energy.\nShared responsibility."
@@ -1379,16 +2848,447 @@
                   >Our sustainability focus ↗</a
                 >
               </article>
+              <article
+                class="story-step"
+                id="story-stewardship"
+                data-figure="CARE"
+                data-unit-en="RESPONSIBILITY · PUBLIC RECORD"
+                data-unit-hi="जिम्मेदारी · सार्वजनिक अभिलेख"
+                data-kicker-en="06 — STEWARDSHIP IN VIEW"
+                data-kicker-hi="06 — जिम्मेदारी सामने"
+                data-location-en="ENVIRONMENT · ASH · CSR · SAFETY"
+                data-location-hi="पर्यावरण · राख · सीएसआर · सुरक्षा"
+                data-theme="stewardship"
+                data-chapter="5"
+              >
+                <span
+                  class="step-number"
+                  data-en="06 — STEWARDSHIP IN VIEW"
+                  data-hi="06 — जिम्मेदारी सामने"
+                  >06 — STEWARDSHIP IN VIEW</span
+                >
+                <h3
+                  data-en="Power carries\nresponsibility."
+                  data-hi="ऊर्जा के साथ\nजिम्मेदारी आती है।"
+                >
+                  Power carries<br />responsibility.
+                </h3>
+                <p
+                  data-en="Environmental information, ash management, safety and CSR are part of the same story. Public reporting gives the work a visible record and keeps the next decision grounded."
+                  data-hi="पर्यावरण संबंधी जानकारी, राख प्रबंधन, सुरक्षा और सीएसआर इसी यात्रा का हिस्सा हैं। सार्वजनिक रिपोर्टिंग काम का स्पष्ट अभिलेख बनाती है और अगले निर्णय को आधार देती है।"
+                >
+                  Environmental information, ash management, safety and CSR are
+                  part of the same story. Public reporting gives the work a
+                  visible record and keeps the next decision grounded.
+                </p>
+                <a
+                  class="text-link"
+                  href="#sustainability"
+                  data-en="See sustainability information ↗"
+                  data-hi="सतत विकास जानकारी देखें ↗"
+                  >See sustainability information ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-archive"
+                data-figure="OPEN"
+                data-unit-en="LOCAL PUBLIC INFORMATION ARCHIVE"
+                data-unit-hi="स्थानीय जन सूचना अभिलेख"
+                data-kicker-en="07 — OPEN INFORMATION"
+                data-kicker-hi="07 — खुली जानकारी"
+                data-location-en="NOTICES · TENDERS · REPORTS"
+                data-location-hi="सूचनाएँ · निविदाएँ · रिपोर्ट"
+                data-theme="archive"
+                data-chapter="6"
+              >
+                <span
+                  class="step-number"
+                  data-en="07 — OPEN INFORMATION"
+                  data-hi="07 — खुली जानकारी"
+                  >07 — OPEN INFORMATION</span
+                >
+                <h3
+                  data-en="Make the record\neasy to reach."
+                  data-hi="अभिलेख तक पहुँचना\nसरल हो।"
+                >
+                  Make the record<br />easy to reach.
+                </h3>
+                <p
+                  data-en="A local, searchable archive brings notices, tenders, reports and contact pathways into one clear public journey. The interface stays here; the information remains usable."
+                  data-hi="स्थानीय, खोज योग्य अभिलेख सूचनाओं, निविदाओं, रिपोर्ट और संपर्क मार्गों को एक स्पष्ट जन यात्रा में लाता है। इंटरफेस यहीं रहता है; जानकारी उपयोगी बनी रहती है।"
+                >
+                  A local, searchable archive brings notices, tenders, reports
+                  and contact pathways into one clear public journey. The
+                  interface stays here; the information remains usable.
+                </p>
+                <a
+                  class="text-link"
+                  href="#info/documents"
+                  data-en="Open the local archive ↗"
+                  data-hi="स्थानीय अभिलेख खोलें ↗"
+                  >Open the local archive ↗</a
+                >
+              </article>
+              <article
+                class="story-step"
+                id="story-continue"
+                data-figure="TVNL"
+                data-unit-en="ENERGY FOR JHARKHAND"
+                data-unit-hi="झारखंड के लिए ऊर्जा"
+                data-kicker-en="08 — CONTINUE THE JOURNEY"
+                data-kicker-hi="08 — यात्रा जारी रखें"
+                data-location-en="PUBLIC SERVICE / NEXT STEP"
+                data-location-hi="जनसेवा / अगला कदम"
+                data-theme="continue"
+                data-chapter="7"
+              >
+                <span
+                  class="step-number"
+                  data-en="08 — CONTINUE THE JOURNEY"
+                  data-hi="08 — यात्रा जारी रखें"
+                  >08 — CONTINUE THE JOURNEY</span
+                >
+                <h3
+                  data-en="The next chapter\nis yours to explore."
+                  data-hi="अगला अध्याय\nआपके लिए खुला है।"
+                >
+                  The next chapter<br />is yours to explore.
+                </h3>
+                <p
+                  data-en="Move from the story to the working record: discover opportunities, read public information, find contacts and explore the company’s generation journey."
+                  data-hi="यात्रा से कार्यशील अभिलेख तक जाएँ: अवसर देखें, जन सूचना पढ़ें, संपर्क खोजें और कंपनी की उत्पादन यात्रा को जानें।"
+                >
+                  Move from the story to the working record: discover
+                  opportunities, read public information, find contacts and
+                  explore the company’s generation journey.
+                </p>
+                <a
+                  class="text-link"
+                  href="#tenders"
+                  data-en="Explore public opportunities ↗"
+                  data-hi="जन अवसर देखें ↗"
+                  >Explore public opportunities ↗</a
+                >
+              </article>
             </div>
           </div>
         </section>
+
+        <!-- STANDALONE UNCONSTRAINED THERMAL POWER PLANT SCHEMATIC SECTION (enpowertrading style) -->
+        <section class="schematic-section-full" id="plant-schematic-section">
+          <div class="section-container">
+            <div
+              class="eyebrow"
+              data-en="02 / Thermal Power Generation Process"
+              data-hi="02 / ताप विद्युत उत्पादन प्रक्रिया रेखाचित्र"
+            >
+              02 / Thermal Power Generation Process
+            </div>
+            <div class="section-heading">
+              <h2
+                data-en="From Coal to Grid:\nThe 8-Stage Thermal Process"
+                data-hi="कोयले से ग्रिड तक:\n8-चरण ताप विद्युत प्रक्रिया"
+              >
+                From Coal to Grid:<br />The 8-Stage Thermal Process
+              </h2>
+              <p
+                data-en="An unconstrained engineering flow of Tenughat Thermal Power Station: as coal, air, and high-pressure steam transform into 210 MW of electrical power."
+                data-hi="तेनुघाट ताप विद्युत केंद्र का निर्बाध इंजीनियरिंग प्रवाह: जैसे कोयला, हवा और उच्च दबाव वाष्प 210 मेगावाट बिजली में परिवर्तित होते हैं।"
+              >
+                An unconstrained engineering flow of Tenughat Thermal Power
+                Station: as coal, air, and high-pressure steam transform into
+                210 MW of electrical power.
+              </p>
+            </div>
+          </div>
+
+          <div class="cine-sequence">
+            <div class="cine-visual" aria-hidden="true">
+              <canvas class="cine-canvas"></canvas>
+            </div>
+            <div class="cine-chapters">
+              <!-- Step 0 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="0"
+                data-tag-en="STAGE 01 / 08"
+                data-tag-hi="चरण 01 / 08"
+                data-title-en="Fuel Supply & Coal Handling"
+                data-title-hi="ईंधन आपूर्ति एवं कोयला प्रबंधन"
+                data-m1="FEED: 180 T/HR"
+                data-m2="SOURCE: LALPANIA YARD"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 01 — FUEL & COAL FEED"
+                  data-hi="चरण 01 — ईंधन एवं कोयला आपूर्ति"
+                  >STAGE 01 — FUEL & COAL FEED</span
+                >
+                <h3
+                  data-en="Coal Conveying &\nCrusher House"
+                  data-hi="कोयला परिवहन एवं\nक्रशर हाउस"
+                >
+                  Coal Conveying &<br />Crusher House
+                </h3>
+                <p
+                  data-en="Raw coal from captive coal blocks and railways is unloaded via wagon tipplers, crushed in the Coal Handling Plant (CHP), and transported via high-capacity conveyor belts directly to the boiler bunkers."
+                  data-hi="कैप्टिव कोयला खंडों और रेलवे से प्राप्त कच्चे कोयले को वैगन टिपलर द्वारा अनलोड किया जाता है, कोयला प्रबंधन संयंत्र (CHP) में कुचला जाता है, और उच्च क्षमता वाले कन्वेयर बेल्ट के माध्यम से सीधे बॉयलर बंकरों तक पहुँचाया जाता है।"
+                >
+                  Raw coal from captive coal blocks and railways is unloaded via
+                  wagon tipplers, crushed in the Coal Handling Plant (CHP), and
+                  transported via high-capacity conveyor belts directly to the
+                  boiler bunkers.
+                </p>
+              </article>
+
+              <!-- Step 1 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="1"
+                data-tag-en="STAGE 02 / 08"
+                data-tag-hi="चरण 02 / 08"
+                data-title-en="Pulverization & High-Temp Boiler"
+                data-title-hi="चूर्णीकरण एवं उच्च-ताप बॉयलर"
+                data-m1="TEMP: 1400°C"
+                data-m2="MILLS: 5 OPERATIONAL"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 02 — BOILER & COMBUSTION"
+                  data-hi="चरण 02 — बॉयलर एवं दहन"
+                  >STAGE 02 — BOILER & COMBUSTION</span
+                >
+                <h3
+                  data-en="1400°C Pulverized\nCombustion"
+                  data-hi="1400°C चूर्णीकृत\nदहन"
+                >
+                  1400°C Pulverized<br />Combustion
+                </h3>
+                <p
+                  data-en="Heavy pulverizer bowl mills grind the coal into fine dust. Primary Air (PA) fans blow the pulverized coal into the 1400°C boiler furnace, releasing immense thermal energy."
+                  data-hi="भारी पल्वराइज़र मिल कोयले को बारीक चूर्ण में पीसती हैं। प्राइमरी एयर (PA) पंखे चूर्णीकृत कोयले को 1400°C बॉयलर भट्टी में फूंकते हैं, जिससे अत्यधिक तापीय ऊर्जा निकलती है।"
+                >
+                  Heavy pulverizer bowl mills grind the coal into fine dust.
+                  Primary Air (PA) fans blow the pulverized coal into the 1400°C
+                  boiler furnace, releasing immense thermal energy.
+                </p>
+              </article>
+
+              <!-- Step 2 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="2"
+                data-tag-en="STAGE 03 / 08"
+                data-tag-hi="चरण 03 / 08"
+                data-title-en="Steam Generation & Superheating"
+                data-title-hi="वाष्प उत्पादन एवं सुपरहीटिंग"
+                data-m1="TEMP: 535°C"
+                data-m2="PRESSURE: 170 KG/CM²"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 03 — STEAM GENERATION"
+                  data-hi="चरण 03 — वाष्प उत्पादन"
+                  >STAGE 03 — STEAM GENERATION</span
+                >
+                <h3
+                  data-en="535°C High-Pressure\nSuperheated Steam"
+                  data-hi="535°C उच्च-दबाव\nसुपरहीटेड स्टीम"
+                >
+                  535°C High-Pressure<br />Superheated Steam
+                </h3>
+                <p
+                  data-en="Demineralized water in furnace wall tubes absorbs intense heat to produce saturated steam. The steam passes through superheater tube banks, raising its temperature to 535°C at 170 kg/cm² pressure."
+                  data-hi="भट्टी की दीवार की नलियों में डिमिनरलाइज्ड पानी तीव्र गर्मी को अवशोषित करके संतृप्त वाष्प बनाता है। वाष्प सुपरहीटर ट्यूब बैंकों से गुजरती है, जिससे इसका तापमान 170 kg/cm² दबाव पर 535°C तक बढ़ जाता है।"
+                >
+                  Demineralized water in furnace wall tubes absorbs intense heat
+                  to produce saturated steam. The steam passes through
+                  superheater tube banks, raising its temperature to 535°C at
+                  170 kg/cm² pressure.
+                </p>
+              </article>
+
+              <!-- Step 3 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="3"
+                data-tag-en="STAGE 04 / 08"
+                data-tag-hi="चरण 04 / 08"
+                data-title-en="Steam Turbine Expansion"
+                data-title-hi="स्टीम टरबाइन विस्तार"
+                data-m1="ROTOR SPEED: 3000 RPM"
+                data-m2="TURBINES: HP / IP / LP"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 04 — STEAM TURBINES"
+                  data-hi="चरण 04 — स्टीम टरबाइन"
+                  >STAGE 04 — STEAM TURBINES</span
+                >
+                <h3
+                  data-en="3000 RPM Thermal\nKinetic Expansion"
+                  data-hi="3000 आरपीएम तापीय\nगतिज विस्तार"
+                >
+                  3000 RPM Thermal<br />Kinetic Expansion
+                </h3>
+                <p
+                  data-en="High-energy steam expands through High Pressure (HP), Intermediate Pressure (IP), and Low Pressure (LP) turbine stages, driving the central steel shaft at a precise 3000 RPM synchronous speed."
+                  data-hi="उच्च-ऊर्जा वाष्प उच्च दबाव (HP), मध्यवर्ती दबाव (IP), और निम्न दबाव (LP) टरबाइन चरणों के माध्यम से फैलती है, जो केंद्रीय स्टील शाफ्ट को सटीक 3000 आरपीएम तुल्यकालिक गति पर चलाती है।"
+                >
+                  High-energy steam expands through High Pressure (HP),
+                  Intermediate Pressure (IP), and Low Pressure (LP) turbine
+                  stages, driving the central steel shaft at a precise 3000 RPM
+                  synchronous speed.
+                </p>
+              </article>
+
+              <!-- Step 4 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="4"
+                data-tag-en="STAGE 05 / 08"
+                data-tag-hi="चरण 05 / 08"
+                data-title-en="Generator & Step-Up Transformer"
+                data-title-hi="जनरेटर एवं स्टेप-अप ट्रांसफार्मर"
+                data-m1="OUTPUT: 210 MW"
+                data-m2="VOLTAGE: 15.75kV ➔ 220kV"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 05 — POWER GENERATION"
+                  data-hi="चरण 05 — विद्युत उत्पादन"
+                  >STAGE 05 — POWER GENERATION</span
+                >
+                <h3
+                  data-en="210 MW Electromagnetic\nAlternator"
+                  data-hi="210 मेगावाट विद्युत\nचुंबकीय अल्टरनेटर"
+                >
+                  210 MW Electromagnetic<br />Alternator
+                </h3>
+                <p
+                  data-en="The rotating shaft turns the hydrogen-cooled 210 MW alternator, generating 15.75 kV 3-phase AC power. Main step-up transformers instantly elevate the voltage to 220 kV for efficient transmission."
+                  data-hi="घूर्णन शाफ्ट हाइड्रोजन-कूल्ड 210 मेगावाट अल्टरनेटर को घुमाता है, जो 15.75kV 3-फेज एसी बिजली पैदा करता है। मुख्य स्टेप-अप ट्रांसफॉर्मर कुशल पारेषण के लिए वोल्टेज को तुरंत 220kV तक बढ़ा देते हैं।"
+                >
+                  The rotating shaft turns the hydrogen-cooled 210 MW
+                  alternator, generating 15.75 kV 3-phase AC power. Main step-up
+                  transformers instantly elevate the voltage to 220 kV for
+                  efficient transmission.
+                </p>
+              </article>
+
+              <!-- Step 5 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="5"
+                data-tag-en="STAGE 06 / 08"
+                data-tag-hi="चरण 06 / 08"
+                data-title-en="Condenser & Cooling Towers"
+                data-title-hi="कंडेनसर एवं कूलिंग टॉवर"
+                data-m1="VACUUM: 0.92 KG/CM²"
+                data-m2="COOLING: TENUGHAT DAM"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 06 — CONDENSER & COOLING"
+                  data-hi="चरण 06 — कंडेनसर एवं शीतलन"
+                  >STAGE 06 — CONDENSER & COOLING</span
+                >
+                <h3
+                  data-en="Surface Condensation &\nReservoir Loop"
+                  data-hi="सतही संघनन एवं\nजलाशय लूप"
+                >
+                  Surface Condensation &<br />Reservoir Loop
+                </h3>
+                <p
+                  data-en="Exhaust steam is condensed back into pure water in surface condensers using cooling water drawn from the adjacent Tenughat Reservoir. Hyperbolic cooling towers dissipate heat into the atmosphere."
+                  data-hi="निकास वाष्प को पास के तेनुघाट जलाशय से लिए गए ठंडे पानी का उपयोग करके सर्फेस कंडेनसर में वापस शुद्ध पानी में संघनित किया जाता है। हाइपरबोलिक कूलिंग टॉवर गर्मी को वायुमंडल में छोड़ते हैं।"
+                >
+                  Exhaust steam is condensed back into pure water in surface
+                  condensers using cooling water drawn from the adjacent
+                  Tenughat Reservoir. Hyperbolic cooling towers dissipate heat
+                  into the atmosphere.
+                </p>
+              </article>
+
+              <!-- Step 6 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="6"
+                data-tag-en="STAGE 07 / 08"
+                data-tag-hi="चरण 07 / 08"
+                data-title-en="ESP Capture & 220m Stack"
+                data-title-hi="ईएसपी कैप्चर एवं 220 मीटर स्टैक"
+                data-m1="EFFICIENCY: 99.9% ESP"
+                data-m2="STACK HEIGHT: 220m"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 07 — ASH & EMISSION CONTROL"
+                  data-hi="चरण 07 — राख एवं उत्सर्जन नियंत्रण"
+                  >STAGE 07 — ASH & EMISSION CONTROL</span
+                >
+                <h3
+                  data-en="99.9% Electrostatic\nFly Ash Filtration"
+                  data-hi="99.9% इलेक्ट्रोस्टैटिक\nफ्लाई ऐश निस्पंदन"
+                >
+                  99.9% Electrostatic<br />Fly Ash Filtration
+                </h3>
+                <p
+                  data-en="Flue gas passes through high-voltage Electrostatic Precipitators (ESP) that trap 99.9% of particulate fly ash before clean gas is discharged safely into the upper atmosphere through the 220m chimney stack."
+                  data-hi="फ्लू गैस उच्च-वोल्टेज इलेक्ट्रोस्टैटिक प्रेसिपिटेटर्स (ESP) से होकर गुजरती है जो 99.9% फ्लाई ऐश कणों को पकड़ लेती है, जिसके बाद स्वच्छ गैस 220 मीटर चिमनी स्टैक के माध्यम से सुरक्षित रूप से वायुमंडल में छोड़ी जाती है।"
+                >
+                  Flue gas passes through high-voltage Electrostatic
+                  Precipitators (ESP) that trap 99.9% of particulate fly ash
+                  before clean gas is discharged safely into the upper
+                  atmosphere through the 220m chimney stack.
+                </p>
+              </article>
+
+              <!-- Step 7 -->
+              <article
+                class="cine-chapter"
+                data-schematic-stage="7"
+                data-tag-en="STAGE 08 / 08"
+                data-tag-hi="चरण 08 / 08"
+                data-title-en="220kV Grid Transmission"
+                data-title-hi="220kV ग्रिड पारेषण"
+                data-m1="GRID: JHARKHAND STATE"
+                data-m2="NODES: RANCHI / BOKARO"
+              >
+                <span
+                  class="step-number"
+                  data-en="STAGE 08 — STATE GRID TRANSMISSION"
+                  data-hi="चरण 08 — राज्य ग्रिड पारेषण"
+                  >STAGE 08 — STATE GRID TRANSMISSION</span
+                >
+                <h3
+                  data-en="220kV High-Voltage\nDistribution"
+                  data-hi="220kV उच्च-वोल्टेज\nवितरण"
+                >
+                  220kV High-Voltage<br />Distribution
+                </h3>
+                <p
+                  data-en="220 kV power enters the switchyard and flows out into Jharkhand's state electrical grid, supplying reliable electricity to industrial hubs, cities, and millions of homes across the state."
+                  data-hi="220 kV बिजली स्विचयार्ड में प्रवेश करती है और झारखंड के राज्य विद्युत ग्रिड में प्रवाहित होती है, जिससे राज्य भर के औद्योगिक केंद्रों, शहरों और लाखों घरों को विश्वसनीय बिजली की आपूर्ति होती है।"
+                >
+                  220 kV power enters the switchyard and flows out into
+                  Jharkhand's state electrical grid, supplying reliable
+                  electricity to industrial hubs, cities, and millions of homes
+                  across the state.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section class="section green-section">
           <div
             class="eyebrow"
-            data-en="02 / Open information. Better access."
-            data-hi="02 / खुली जानकारी। बेहतर पहुँच।"
+            data-en="03 / Open information. Better access."
+            data-hi="03 / खुली जानकारी। बेहतर पहुँच।"
           >
-            02 / Open information. Better access.
+            03 / Open information. Better access.
           </div>
           <div class="section-heading">
             <h2
@@ -1493,7 +3393,7 @@
             <div class="photo-card">
               <img
                 id="plant-photo"
-                src="https://tvnl.in/img/slider/1.jpg"
+                src="assets/plant-sl1.jpg"
                 alt="Tenughat Thermal Power Station"
                 loading="lazy"
               />
@@ -1614,6 +3514,9 @@
       ><input id="site-search" type="search" autocomplete="off" />
       <div class="search-results" id="search-results"></div>
     </dialog>
+    <script src="content/tvnl-scraped.js"></script>
+    <script src="thermal-world.js"></script>
+    <script src="thermal-cinematic.js"></script>
     <script src="site.js"></script>
   </body>
 </html>
