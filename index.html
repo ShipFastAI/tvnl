@@ -138,9 +138,8 @@
         align-items: center;
       }
       .brand img {
-        width: 54px;
         height: 54px;
-        object-fit: contain;
+        width: auto;
       }
       .brand-name {
         font-family: var(--font-heading);
@@ -1986,10 +1985,8 @@
         color: var(--muted);
       }
       .brand img {
-        width: 100px;
         height: 54px;
-        object-fit: cover;
-        object-position: left center;
+        width: auto;
       }
       .story-visual::after {
         content: '';
@@ -2077,8 +2074,8 @@
       }
       @media (max-width: 900px) {
         .brand img {
-          width: 80px;
           height: 43px;
+          width: auto;
         }
         .archive-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -2086,8 +2083,8 @@
       }
       @media (max-width: 600px) {
         .brand img {
-          width: 64px;
           height: 35px;
+          width: auto;
         }
         .story-visual[data-theme='motion'] .story-figure {
           transform: translateY(-10px);
@@ -2109,8 +2106,8 @@
           font-size: 14px;
         }
         .brand img {
-          width: 46px;
           height: 46px;
+          width: auto;
         }
         .brand small {
           font-size: 9px;
@@ -2176,8 +2173,8 @@
           letter-spacing: 0;
         }
         .brand img {
-          width: 40px;
           height: 40px;
+          width: auto;
         }
         .seal {
           display: none;
@@ -2428,7 +2425,7 @@
     <header class="masthead">
       <div class="identity">
         <a class="brand" href="#home"
-          ><img src="assets/tvnl-logo.png" alt="TVNL" />
+          ><img src="assets/tvnl-emblem.png" alt="TVNL" />
           <div>
             <div
               class="brand-name"
