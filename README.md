@@ -13,9 +13,9 @@ The generation source is [`scripts/scrape-tvnl-demo.mjs`](../../scripts/scrape-t
 ## Experience map
 
 - `Home` — eight scroll-led chapters: Arrival → Power today (420 MW) → Energy in motion (2 × 210 MW) → Planned thermal expansion (1,740 MW total) → Planned solar project (50 MW) → Stewardship → Public archive → Continue the journey.
-- `The Company` — overview, organization, headquarter and plant charts, board, messages, strength, businesses, policies, awards.
-- `Power Generation` — plants, installed capacity and historical performance highlights.
-- `Sustainability` — CSR, environment, environmental policy and safety.
+- `The Company` — overview, organization, headquarter and plant charts, board, messages, strength, businesses, policies, awards. Sections carry editorial copy written for this proposal (not mirrored TVNL phrasing) with placed photography.
+- `Power Generation` — plants, installed capacity and historical performance highlights, with representative imagery.
+- `Sustainability` — CSR, environment, environmental policy and safety, with representative imagery.
 - `Tenders` — notices, extensions, news, corrigenda and cancellations, with a working local filter.
 - `Notices` — circulars/office orders, latest updates, public notices and employment notices.
 - `Media` — news/events, photo gallery, videos and media coverage.
@@ -36,7 +36,8 @@ Current-run verification is pending: scrape inventory reconciliation, local docu
 - TVNL facts, current navigation labels and disclosure categories: [`docs/tvnl.md`](../tvnl.md), with source provenance retained in the strategy document and scrape manifest.
 - Local TVNL logo: [`assets/tvnl-logo.png`](assets/tvnl-logo.png).
 - Local Jharkhand state emblem: [`assets/jharkhand-emblem.png`](assets/jharkhand-emblem.png).
-- Local plant images: [`assets/plant-sl1.jpg`](assets/plant-sl1.jpg) and [`assets/plant-sl2.jpg`](assets/plant-sl2.jpg).
+- Local plant images: [`assets/plant-sl1.jpg`](assets/plant-sl1.jpg) and [`assets/plant-sl2.jpg`](assets/plant-sl2.jpg); about-page photo [`assets/abt.jpg`](assets/abt.jpg) and Managing Director portrait [`assets/MD_Tvnl.jpg`](assets/MD_Tvnl.jpg) mirrored from tvnl.in.
+- Representative stock photography (`assets/stock-*.jpg`, via Unsplash): control room, station exterior, cooling towers, transmission pylons, coal, solar field, site safety. These are captioned as representative images and do not depict TTPS.
 - Presentation references: [`ZettaJoule`](../zettajoule), [`Enpower Trading`](https://enpowertrading.co.za/), [`Caeli Energie`](https://www.caeli-energie.com/en/), [`Aramco`](https://www.aramco.com/en).
 
 The reference sites inform presentation and interaction only. TVNL claims remain tied to the source documents and published records.

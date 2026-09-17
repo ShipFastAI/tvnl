@@ -29776,6 +29776,22 @@ window.TVNL_SCRAPED_DOCUMENTS = [
     sha256: '82bb654bba4c9066274bf44f0cc165b54da856ea2b3c6ed3871a0e3e2e1a7fe4',
     capturedAt: '2026-09-16T10:09:25.315Z',
   },
+  {
+    sourcePath: '/pdf/tvnl_hdqrtr_orgzn_struct.pdf',
+    localPath: 'content/documents/01-pdf-tvnl-hdqrtr-orgzn-struct-pdf.pdf',
+    label: 'TVNL Headquarter Organization Structure',
+    bytes: 52238,
+    sha256: 'd4d9b6a222d8e2492d298f66368d9d13dd16c3746fd80d164172353507d4e19f',
+    capturedAt: '2026-09-16T10:09:25.315Z',
+  },
+  {
+    sourcePath: '/pdf/ttps_plant_orgztnstruc.pdf',
+    localPath: 'content/documents/02-pdf-ttps-plant-orgztnstruc-pdf.pdf',
+    label: 'TTPS Plant Organization Structure',
+    bytes: 79121,
+    sha256: '6e55d0d4f2bf40cdeb47578273be2cb65ee15103321df8199092053480f552de',
+    capturedAt: '2026-09-16T10:09:25.315Z',
+  },
 ]
 window.TVNL_SCRAPED_ASSETS = [
   { localPath: 'assets/tvnl-logo.png', status: 200 },
