@@ -44,10 +44,10 @@ The reference sites inform presentation and interaction only. TVNL claims remain
 
 ## Proposal package
 
-- [`formal-quotation.md`](formal-quotation.md)
-- [`capability-statement.md`](capability-statement.md)
-- [`outreach-email.md`](outreach-email.md)
-- [`sow-draft.md`](sow-draft.md)
+Commercial documents (quotation, capability statement, outreach draft, SOW)
+are kept out of this public repo — they live in private storage and are
+shared with the client through the outreach channel, not via git.
+
 - [`issues/`](issues/) — workstream ticket bodies and GitHub issue status
 
 GitHub tracking is live in [Ship Fast Project #1](https://github.com/orgs/ShipFastAI/projects/1):
